@@ -1,64 +1,38 @@
 var express = require('express');
 var router = express.Router();
-
-// gets URI from .env 
-var uri = process.env.DB_URI;
-var MongoClient = require('mongodb').MongoClient;
+const Favourite = require('../models/Favourite');
 
 /* GET favourites listing. */
 router.get('/', function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json');
-    MongoClient.connect(uri, function (err, client) {
-        if (err) {
-            console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
-        }
-        console.log('Connected...');
-        const collection = client.db("travelr").collection("favourites");
-        collection.find({}).toArray((err, result) => {
-            if (err) console.log(err)
-            else {
-                return res.send(result);
-            }
-        })
-        // perform actions on the collection object
-        client.close();
-    });
+    Favourite.find()
+    .then(favourites => {
+        res.json(favourites);
+    })
+    .catch(err => {
+        res.json(err);
+    })
 });
 
 
 /* POST a favourite */
 router.post('/', function(req, res, next) {
-    const newFavourite = req.body;
-    // newMessage.id = uuid();
-    MongoClient.connect(uri, function (err, client) {
-        if (err) {
-            console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
-        }
-        console.log('Connected...');
-        const collection = client.db("travelr").collection("favourites");
-        collection.insertOne(
-            newFavourite
-        )
-        // perform actions on the collection object
-        client.close();
-    });
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(newFavourite);
+    Favourite.create(req.body)
+    .then(favourite => {
+        res.json(favourite)
+        .catch(err => res.json(err));
+    })
 });
 
 /* DELETE a favourite */
 router.delete('/:id', function(req, res, next) {
-    MongoClient.connect(uri, function (err, client) {
-        if (err) {
-            console.log('Error occurred while connecting to MongoDB Atlas...\n', err);
-        }
-        console.log('Connected...');
-        const collection = client.db("travelr").collection("favourites");
-        collection.deleteOne({id: req.params.id});
-        client.close();
+    console.log(req.params.id);
+    Favourite.findOneAndDelete({id: req.params.id})
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        res.json(err);
     });
-    res.send(req.params.id);
-})
+});
 
 module.exports = router;

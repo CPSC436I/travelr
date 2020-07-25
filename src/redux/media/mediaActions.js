@@ -19,10 +19,10 @@ import Unsplash, { toJson } from 'unsplash-js';
 const APP_ACCESS_KEY = 'adYDaJCisGClWz_PnSuJJiuzl1hItt3kKGxKLePeYPA';
 const SECRET_KEY = 'KFaS1rVbg4l9G1OJ1TSVCL2mYnDMl9c-5wi8puO2Bjo';
 const unsplash = new Unsplash(
-  {
-    accessKey: APP_ACCESS_KEY,
-    secret: SECRET_KEY
-  }
+    {
+        accessKey: APP_ACCESS_KEY,
+        secret: SECRET_KEY
+    }
 );
 const TRAVELR_API = 'https://cpsc436i-project-api.herokuapp.com';
 const FAVOURITES_URL = `${TRAVELR_API}/favourites`;
@@ -55,7 +55,7 @@ export const fetchMedia = destination => {
         unsplash.search.photos(destination, 1, 12, { orientation: 'landscape' })
             .then(toJson)
             .then(json => {
-                dispatch(fetchMediaSuccess({...json, query: destination}));
+                dispatch(fetchMediaSuccess({ ...json, query: destination }));
             })
             .catch(error => {
                 dispatch(fetchMediaFailure(error.message));
@@ -121,7 +121,7 @@ export const toggleSaveMedia = (folder, media, shouldSave) => {
                 });
         } else {
             /* unsave id to mongoDB */
-            fetch(TRAVELR_API + "/" + media.id,
+            fetch(FAVOURITES_URL + "/" + media.id,
                 {
                     method: "DELETE",
                 }
@@ -161,7 +161,7 @@ export const fetchFavourites = () => {
     return (dispatch) => {
         dispatch(fetchFavouritesRequest);
         fetch(FAVOURITES_URL,
-            { 
+            {
                 method: 'GET',
             }
         )
@@ -201,19 +201,19 @@ export const fetchVideos = (query) => {
         fetch(VIDEOS_URL, {
             method: 'POST',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              destination: query
+                destination: query
             })
-          })
-          .then(toJson)
-          .then(json => {
-              dispatch(fetchVideosSuccess(json));
-          })
-          .catch(error => {
-              dispatch(fetchVideosFailure(error.message));
-          })
+        })
+            .then(toJson)
+            .then(json => {
+                dispatch(fetchVideosSuccess(json));
+            })
+            .catch(error => {
+                dispatch(fetchVideosFailure(error.message));
+            })
     }
 }
