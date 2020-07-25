@@ -16,15 +16,13 @@ import {
 } from './mediaTypes.js';
 
 import Unsplash, { toJson } from 'unsplash-js';
-const APP_ACCESS_KEY = 'adYDaJCisGClWz_PnSuJJiuzl1hItt3kKGxKLePeYPA';
-const SECRET_KEY = 'KFaS1rVbg4l9G1OJ1TSVCL2mYnDMl9c-5wi8puO2Bjo';
 const unsplash = new Unsplash(
     {
-        accessKey: APP_ACCESS_KEY,
-        secret: SECRET_KEY
+        accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
+        secret: process.env.REACT_APP_UNSPLASH_SECRET_KEY
     }
 );
-const TRAVELR_API = 'https://cpsc436i-project-api.herokuapp.com';
+const TRAVELR_API = process.env.REACT_APP_API_URI;
 const FAVOURITES_URL = `${TRAVELR_API}/favourites`;
 const VIDEOS_URL = `${TRAVELR_API}/findVideos`;
 
