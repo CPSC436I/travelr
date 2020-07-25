@@ -24,7 +24,7 @@ const unsplash = new Unsplash(
     secret: SECRET_KEY
   }
 );
-const TRAVELR_API = 'https://cpsc436i-posting-website-api.herokuapp.com';
+const TRAVELR_API = 'https://cpsc436i-project-api.herokuapp.com';
 const FAVOURITES_URL = `${TRAVELR_API}/favourites`;
 const VIDEOS_URL = `${TRAVELR_API}/findVideos`;
 
