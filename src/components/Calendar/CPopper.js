@@ -10,11 +10,11 @@ https://material-ui.com/components/transitions/
 */
 export default function CPopper() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [placement, setPlacement] = React.useState();
+  // const [placement, setPlacement] = React.useState();
 
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
-    setPlacement('left-start');
+    // setPlacement('left-start');
   };
 
   const open = Boolean(anchorEl);

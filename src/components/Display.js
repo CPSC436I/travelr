@@ -18,11 +18,7 @@ const styles = makeStyles => ({
     alignItems: 'center',
     alignContent: 'center',
     direction: 'row',
-    // flexwrap: 'wrap'
   }
-  // pos: {
-  //   marginBottom: 12,
-  // },
 });
 
 function mergeMediaAndVideos (query, media, folders, videos) {
@@ -71,7 +67,6 @@ function Display({ query, media, folders, fetchFavourites, videos }) {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state);
   return {
     query: state.media.query,
     media: state.media.results,

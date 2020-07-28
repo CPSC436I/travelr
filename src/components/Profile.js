@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import { profile } from './Login'
-import { Link } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
 
 const clientId = "99565761776-86oc4v48e5kfk2sng5kj0duo673ao88r.apps.googleusercontent.com";

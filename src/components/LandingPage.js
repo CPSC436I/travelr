@@ -14,26 +14,32 @@ import Zakynthos from '../img/greece-zakynthos.png';
 
 const images = [
   {
+    key: 1,
     location: 'Japan',
     imgSrc: japanImg
   },
   {
+    key: 2,
     location: 'Greece',
     imgSrc: greeceImg
   },
   {
+    key: 3,
     location: 'Romania',
     imgSrc: romaniaImg
   },
   {
+    key: 4,
     location: 'Santorini',
     imgSrc: Santorini
   },
   {
+    key: 5,
     location: 'Zakynthos',
     imgSrc: Zakynthos
   },
   {
+    key: 6,
     location: 'New Zealand',
     imgSrc: nzImg
   },
@@ -56,9 +62,6 @@ const useStyles = makeStyles((theme) => ({
     alignContent: 'center',
     direction: 'row'
   }
-  // pos: {
-  //   marginBottom: 12,
-  // },
 }));
 
 export default function LandingPage() {
@@ -75,8 +78,7 @@ export default function LandingPage() {
         alignContent="center"
       >
         {images.map((image) => {
-          // console.log(image.location)
-          return <Grid item xs={4}>
+          return <Grid item xs={4} key={image.key}>
             <Card className={classes.root}>
               <CardMedia
                 component="img"
@@ -89,8 +91,9 @@ export default function LandingPage() {
               </CardActions>
             </Card>
           </Grid>
-        })}
+        }
+        )}
       </Grid>
-    </div>
+    </div >
   );
 };
