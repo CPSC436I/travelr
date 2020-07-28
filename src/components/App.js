@@ -7,7 +7,7 @@ import CPopper from './Calendar/CPopper';
 import MyTrips from './Trips/TripsList';
 import SampleTrip from './Trips/TripPageNew';
 import Display from './Display';
-import NavBar from './NavBar';
+import NavBar from './NavBar/NavBar';
 import LandingPage from './LandingPage';
 import Profile from './Profile';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
