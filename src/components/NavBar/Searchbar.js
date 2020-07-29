@@ -55,11 +55,12 @@ function Searchbar() {
   const handleSubmit = (event) => {
     dispatch(fetchMedia(location));
     event.preventDefault();
-    setToResults(true);
-    if (toResults === true) {
-      setToResults(false);
-      history.push('/results')
-    }
+    history.push('/results')
+    // setToResults(true);
+    // if (toResults === true) {
+    //   setToResults(false);
+    //   history.push('/results')
+    // }
   }
 
   return (
