@@ -11,10 +11,11 @@ import Container from '@material-ui/core/Container';
 import PublicIcon from '@material-ui/icons/Public';
 import { connect } from 'react-redux';
 import { addTrip } from '../../redux/trips/tripsActions'
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -32,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let title = React.createRef();
-let days = React.createRef();
-
-function handleSubmit (event) {
-  event.preventDefault();
-  console.log(title.value);
-  console.log(days.value);
-}
-
 function NewTripForm() {
   const classes = useStyles();
+  const [tripName, setTripName] = React.useState('');
+  const [numberOfDays, setNumberOfdays] = React.useState('');
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(addTrip({tripName, numberOfDays}));
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,29 +59,29 @@ function NewTripForm() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                ref={title}
                 variant="outlined"
-                required
                 fullWidth
                 id="tripName"
                 label="Trip Name"
+                value={tripName}
+                onChange={e => setTripName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                ref={days}
                 id="tripDays"
                 label="Days"
                 type="number"
                 variant="outlined"
-                defaultValue="1"
-                required
+                // defaultValue="1"
                 fullWidth
                 InputProps={{
                   inputProps: {
                     max: 10, min: 1
                   }
                 }}
+                value={numberOfDays}
+                onChange={e => setNumberOfdays(e.target.value)}
               />
             </Grid>
           </Grid>
@@ -90,6 +91,7 @@ function NewTripForm() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            // onClick={handleClose}
           >
             Create
           </Button>

@@ -47,7 +47,7 @@ function Searchbar() {
   const classes = useStyles();
   const [location, setLocation] = React.useState('');
   const [type, setType] = React.useState('photos');
-  const [toResults, setToResults] = React.useState(false);
+  // const [toResults, setToResults] = React.useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();

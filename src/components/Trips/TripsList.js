@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import TripsListItem from './TripsListItem';
 import { connect } from 'react-redux';
 import { addTrip, deleteTrip } from '../../redux/trips/tripsActions';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  List
+  List, ListItem
 } from '@material-ui/core';
 import NewTripModal from './NewTripModal';
 
@@ -22,14 +22,14 @@ function TripsList({trips}){
     <div className={classes.list}>
     <NewTripModal/>
     <List>
-    {trips.trips.map((trip, index) => React.cloneElement(TripsListItem(trip, index, deleteTrip)))}
+    {trips.slice(0).reverse().map((trip, index) => React.cloneElement(TripsListItem(trip, index, deleteTrip)))}
     </List>
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log('this is state', state.trips)
   return { trips: state.trips };
 };
 

@@ -1,8 +1,8 @@
 export const addTrip = input => {
   return {
     type: 'ADD_TRIP',
-    title: input.title,
-    days: input.days
+    title: input.tripName,
+    days: input.numberOfDays
   };
 };
 
