@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import UserProvider from '../contexts/UserProvider';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import { profile } from './Login'
-import { Link } from 'react-router-dom';
-import { GoogleLogout } from 'react-google-login';
+// import { Avatar } from '@material-ui/core';
+// import { profile } from './Login'
+// import { GoogleLogout } from 'react-google-login';
 
 const clientId = "99565761776-86oc4v48e5kfk2sng5kj0duo673ao88r.apps.googleusercontent.com";
 
@@ -29,22 +28,26 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Profile() {
+    // const [selected, setSelected] = useState("All");
+    const userData = useContext(UserProvider.context);
+
     const classes = useStyles();
-    const onSuccess = () => {
-        alert('Logout made successfully');
-    };
+
+    // const onSuccess = () => {
+    //     alert('Logout made successfully');
+    // };
 
     return (
         <div className={classes.root}>
-            <p className={classes.font}> {profile.name} </p>
+            {JSON.stringify(userData)}
+            {/* <p className={classes.font}> {profile.name} </p>
             <Avatar alt={profile.name} src={profile.imageUrl} className={classes.large} />
             <br></br>
             <GoogleLogout
                 clientId={clientId}
                 buttonText="Logout"
                 onLogoutSuccess={onSuccess}
-                ></GoogleLogout>
-
+                ></GoogleLogout> */}
         </div>
     );
 }
