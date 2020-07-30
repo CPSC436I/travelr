@@ -50,7 +50,7 @@ function Login() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <h1>Register</h1>
         <input placeholder='username' onChange={e => setRegisterUsername(e.target.value)} />
         <input placeholder='password' onChange={e => setRegisterPassword(e.target.value)} />
@@ -65,7 +65,7 @@ function Login() {
       <div>
         <h1>Get User</h1>
         <button onClick={getUser}>Submit</button>
-      </div>
+      </div> */}
       <ButtonList />
     </div>
   );
