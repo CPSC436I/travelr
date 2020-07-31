@@ -15,7 +15,12 @@ import {
     FETCH_VIDEOS_FAILURE
 } from './mediaTypes.js';
 
+import axios from 'axios';
+
 import Unsplash, { toJson } from 'unsplash-js';
+
+axios.defaults.withCredentials = true;
+
 const unsplash = new Unsplash(
     {
         accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY,
@@ -102,15 +107,14 @@ export const toggleSaveMedia = (folder, media, shouldSave) => {
         if (shouldSave) {
             /* save id to mongoDB */
             console.log(JSON.stringify(media));
-            fetch(FAVOURITES_URL,
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(media)
-                }
-            )
+            let config = {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            }
+            axios.post(FAVOURITES_URL, {...media}, config)
                 .then(res => {
                     dispatch(saveMediaSuccess(folder, media));
                 })
@@ -119,11 +123,11 @@ export const toggleSaveMedia = (folder, media, shouldSave) => {
                 });
         } else {
             /* unsave id to mongoDB */
-            fetch(FAVOURITES_URL + "/" + media.id,
-                {
-                    method: "DELETE",
-                }
-            )
+            axios({
+                method: 'DELETE',
+                url: FAVOURITES_URL + '/' + media.id,
+                withCredentials: true
+            })
                 .then(res => {
                     dispatch(unsaveMediaSuccess(folder, media));
                 })
@@ -158,14 +162,13 @@ const fetchFavouritesFailure = (error) => {
 export const fetchFavourites = () => {
     return (dispatch) => {
         dispatch(fetchFavouritesRequest);
-        fetch(FAVOURITES_URL,
-            {
-                method: 'GET',
-            }
-        )
-            .then(toJson)
+        axios({
+            url: FAVOURITES_URL,
+            method: 'GET',
+            withCredentials: true
+        })
             .then(json => {
-                dispatch(fetchFavouritesSuccess(json));
+                dispatch(fetchFavouritesSuccess(json.data));
             })
             .catch(error => {
                 dispatch(fetchFavouritesFailure(error.message));

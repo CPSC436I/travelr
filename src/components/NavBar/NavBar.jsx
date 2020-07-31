@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import UserProvider from '../../contexts/UserProvider';
+import _ from 'lodash';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -41,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PrimarySearchAppBar({signedIn}) {
+function PrimarySearchAppBar() {
+  const [userData, setUser] = useContext(UserProvider.context);
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -54,6 +58,7 @@ function PrimarySearchAppBar({signedIn}) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+  console.log(userData);
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -66,7 +71,7 @@ function PrimarySearchAppBar({signedIn}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {signedIn ?
+      {!_.isEmpty(userData) ?
         <div>
           <Link to="/profile" color="inherit">
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
@@ -95,7 +100,7 @@ function PrimarySearchAppBar({signedIn}) {
           <Searchbar />
           <div className={classes.grow} />
           {
-            signedIn ?
+            !_.isEmpty(userData) ?
               <div className={classes.sectionDesktop}>
                 <Link to="/saved" className={classes.navButton}>
                   <Button variant="outlined" >Saved</Button>
@@ -132,11 +137,4 @@ function PrimarySearchAppBar({signedIn}) {
   );
 }
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    signedIn: state.user.signedIn,
-  };
-};
-
-export default connect(mapStateToProps, null)(PrimarySearchAppBar);
+export default PrimarySearchAppBar;

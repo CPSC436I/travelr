@@ -1,23 +1,28 @@
-import React from 'react';
-import { userLogout } from '../redux';
-import { connect } from 'react-redux';
+import React, {useEffect, useContext} from 'react';
+import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import UserProvider from '../contexts/UserProvider';
 
-function Logout({ logout }) {
+
+function Logout() {
     
-    logout();
+    const [userData, setUser] = useContext(UserProvider.context);
+
+    useEffect(() => {
+        axios({
+            method: 'GET',
+            data: {},
+            withCredentials: true,
+            url: 'http://localhost:9000/auth/logout'
+        }).then(res => {
+            console.log(res);
+            setUser(null);
+        });
+    });
 
     return (
         <Redirect to="/" />
     )
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        logout: () => {
-            dispatch(userLogout());
-        }
-    }
-}
-
-export default connect(null, mapDispatchToProps)(Logout);
+export default Logout;
