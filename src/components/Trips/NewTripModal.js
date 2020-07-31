@@ -14,12 +14,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 10
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    outline: 0,
+    borderRadius: 10
   },
 }));
 
@@ -59,8 +61,7 @@ export default function NewTripModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-
-            <NewTripForm/>
+            <NewTripForm handleClose={handleClose} />
           </div>
         </Fade>
       </Modal>
