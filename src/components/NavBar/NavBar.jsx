@@ -10,7 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import travelr from '../travelr.svg';
+import travelr from '../../img/travelr.svg';
 import Searchbar from './Searchbar';
 import { connect } from 'react-redux';
 

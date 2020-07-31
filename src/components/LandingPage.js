@@ -11,29 +11,38 @@ import romaniaImg from '../img/romania.png';
 import nzImg from '../img/newzealand.png';
 import Santorini from '../img/greece-santorini.png';
 import Zakynthos from '../img/greece-zakynthos.png';
+import { fetchMedia } from "../redux/media/mediaActions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const images = [
   {
+    key: 1,
     location: 'Japan',
     imgSrc: japanImg
   },
   {
+    key: 2,
     location: 'Greece',
     imgSrc: greeceImg
   },
   {
+    key: 3,
     location: 'Romania',
     imgSrc: romaniaImg
   },
   {
+    key: 4,
     location: 'Santorini',
     imgSrc: Santorini
   },
   {
+    key: 5,
     location: 'Zakynthos',
     imgSrc: Zakynthos
   },
   {
+    key: 6,
     location: 'New Zealand',
     imgSrc: nzImg
   },
@@ -56,13 +65,18 @@ const useStyles = makeStyles((theme) => ({
     alignContent: 'center',
     direction: 'row'
   }
-  // pos: {
-  //   marginBottom: 12,
-  // },
 }));
+
+function handleClick(image) {
+  console.log(image);
+}
 
 export default function LandingPage() {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   return (
     <div>
       <h1 className={classes.title}>Where will your next journey take you?</h1>
@@ -75,9 +89,11 @@ export default function LandingPage() {
         alignContent="center"
       >
         {images.map((image) => {
-          // console.log(image.location)
-          return <Grid item xs={4}>
-            <Card className={classes.root}>
+          return <Grid item xs={4} key={image.key}>
+            <Card className={classes.root} onClick={() => {
+                  dispatch(fetchMedia(image.location));
+                  history.push('/results');
+                }}>
               <CardMedia
                 component="img"
                 height="240"
@@ -85,12 +101,12 @@ export default function LandingPage() {
                 title={image.location}
               />
               <CardActions>
-                <Button size="small">{image.location}</Button>
+                <Button size="small" >{image.location}</Button>
               </CardActions>
             </Card>
           </Grid>
         })}
       </Grid>
-    </div>
+    </div >
   );
 };

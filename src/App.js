@@ -1,5 +1,15 @@
 import React from 'react';
 import './App.css';
+import Login from './Login';
+import Logout from './Logout';
+import MainCalendar from './Calendar/MainCalendar';
+import CPopper from './Calendar/CPopper';
+import MyTrips from './Trips/TripsList';
+import SampleTrip from './Trips/TripPageNew';
+import Display from './Display';
+import NavBar from './NavBar/NavBar';
+import LandingPage from './LandingPage';
+import Profile from './Profile';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import UserProvider from './contexts/UserProvider';
 import history from './history';
