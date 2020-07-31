@@ -61,7 +61,7 @@ export default function NewTripModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <NewTripForm/>
+            <NewTripForm handleClose={handleClose} />
           </div>
         </Fade>
       </Modal>

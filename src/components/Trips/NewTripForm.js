@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewTripForm() {
+function NewTripForm({handleClose}) {
   const classes = useStyles();
   const [tripName, setTripName] = React.useState('');
   const [numberOfDays, setNumberOfdays] = React.useState('');
@@ -42,7 +42,10 @@ function NewTripForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(addTrip({tripName, numberOfDays}));
+    if (numberOfDays <= 10) {
+      dispatch(addTrip({tripName, numberOfDays}));
+      handleClose();
+    }
   }
 
   return (
@@ -80,6 +83,8 @@ function NewTripForm() {
                     max: 10, min: 1
                   }
                 }}
+                error={numberOfDays && (numberOfDays > 10 || numberOfDays < 1)}
+                helperText="The number of days must be between 1 and 10"
                 value={numberOfDays}
                 onChange={e => setNumberOfdays(e.target.value)}
               />
