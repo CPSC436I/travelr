@@ -10,6 +10,51 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import japanImg from '../../img/japan.png';
+import greeceImg from '../../img/greece.png';
+import romaniaImg from '../../img/romania.png';
+import nzImg from '../../img/newzealand.png';
+import Santorini from '../../img/greece-santorini.png';
+import Zakynthos from '../../img/greece-zakynthos.png';
+
+const images = [
+  {
+    key: 1,
+    location: 'Japan',
+    imgSrc: japanImg
+  },
+  {
+    key: 2,
+    location: 'Greece',
+    imgSrc: greeceImg
+  },
+  {
+    key: 3,
+    location: 'Romania',
+    imgSrc: romaniaImg
+  },
+  {
+    key: 4,
+    location: 'Santorini',
+    imgSrc: Santorini
+  },
+  {
+    key: 5,
+    location: 'Zakynthos',
+    imgSrc: Zakynthos
+  },
+  {
+    key: 6,
+    location: 'New Zealand',
+    imgSrc: nzImg
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +78,7 @@ function AddFavouriteModal({ folders, fetchFavourites }) {
 
   const classes = useStyles();
   const [selectedFilters, setFilters] = React.useState([]);
+  const [selectedFavourites, setFavourites] = React.useState([]);
 
   useEffect(() => {
     fetchFavourites();
@@ -49,11 +95,37 @@ function AddFavouriteModal({ folders, fetchFavourites }) {
 
     console.log(selectedFilters);
   };
-  console.log(folders.folders === undefined ? "nothing" : folders.folders[0])
+  // console.log(folders.folders === undefined ? "nothing" : folders.folders[0])
 
   return (
     <div className={classes.container}>
-      
+      <div>
+      <Grid
+        container
+        flexgrow={1}
+        spacing={3}
+        direction="row"
+        justify="center"
+        alignContent="center"
+      >
+        {images.map((image) => {
+          return <Grid item xs={4} key={image.key}>
+            <Card>
+              <CardMedia
+                component="img"
+                height="240"
+                image={image.imgSrc}
+                title={image.location}
+              />
+              <CardActions>
+              <Checkbox checked={selectedFilters.includes(image.location)} onChange={handleChange} name={image.location} />
+                <Button size="small" >{image.location}</Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        })}
+      </Grid>
+    </div >
       <div className={classes.sidebar}>
         <FormControl component="fieldset" className={classes.formControl}>
           <FormLabel component="legend">Filters</FormLabel>
