@@ -1,4 +1,4 @@
-var tempTrips = {trips: [
+var starterTrips = [
   {
     title: "Greece Honeymoon",
     days: 3
@@ -11,7 +11,7 @@ var tempTrips = {trips: [
     title: "Mexico Christmas",
     days: 7
   }
-]};
+];
 
 var tempGreeceTrip = {
   title: "Greece Honeymoon",
@@ -23,10 +23,9 @@ var tempGreeceTrip = {
   ]
 };
 
-const tripsState = (trips = tempTrips, action) => {
+const tripsState = (trips = starterTrips, action) => {
   if (action.type === 'ADD_TRIP' && action.title !== "") {
-    trips.trips.push({title: action.title, days: action.days});
-    return trips;
+    return trips.concat({title: action.title, days: parseInt(action.days)});
   }
   if (action.type === 'DELETE_TRIP') {
     return trips.filter(trip => trip.title !== action.title);
