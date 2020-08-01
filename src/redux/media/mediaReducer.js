@@ -12,7 +12,10 @@ import {
     UNSAVE_MEDIA_FAILURE,
     FETCH_VIDEOS_REQUEST,
     FETCH_VIDEOS_SUCCESS,
-    FETCH_VIDEOS_FAILURE
+    FETCH_VIDEOS_FAILURE,
+    FETCH_PLACES_REQUEST,
+    FETCH_PLACES_SUCCESS,
+    FETCH_PLACES_FAILURE
 } from './mediaTypes.js';
 
 const initialState = {
@@ -175,8 +178,41 @@ const videosReducer = (state = initialVideos, action) => {
 
 };
 
+const initialPlaces = {
+    loading: false,
+    places: [],
+    error: ''
+};
+
+const placesReducer = (state = initialPlaces, action) => {
+    switch (action.type) {
+        case FETCH_PLACES_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_PLACES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                ...action.payload,
+                error: ''
+            }
+        case FETCH_PLACES_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                places: [],
+                error: action.payload
+            }
+        default: return state;
+    }
+
+};
+
 export const mediaReducer = {
     media: mediaState,
     folders: foldersReducer,
     videos: videosReducer,
+    places: placesReducer
 };
