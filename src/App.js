@@ -13,7 +13,6 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import UserProvider from './contexts/UserProvider';
 import history from './history';
 import SavedDisplay from './components/SavedDisplay';
-import AddFavouriteModal from './components/Trips/AddFavouriteModal';
 
 
 function App() {
@@ -32,7 +31,6 @@ function App() {
         <Route path="/" component={LandingPage} exact />
         <Route path="/results" component={Display} />
         <Route path="/sampleTrip" component={SampleTrip} />
-        <Route path="/addfave" component={AddFavouriteModal} />
       </Switch>
     </Router>
 
