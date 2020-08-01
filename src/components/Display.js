@@ -3,11 +3,12 @@ import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Media from './Media';
-import { fetchFavourites } from '../redux';
+import { fetchFavourites, fetchVideos, fetchPlaces, fetchMedia } from '../redux';
 // import getPlaceDetails from '../../api/routes/places';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
+import { session } from 'passport';
 
 const styles = makeStyles => ({
   root: {
@@ -67,9 +68,17 @@ function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFi
   return filteredContent;
 }
 
-function Display ({ query, media, folders, fetchFavourites, videos, places, searchBarFilter }) {
+
+function Display ({ query, media, folders, fetchFavourites, videos, places , fetchMedia, fetchVideos, fetchPlaces, searchBarFilter }) {
   useEffect(() => {
-    fetchFavourites();
+    query = sessionStorage.getItem('query');
+    console.log(query);
+    if (query) {
+      fetchMedia(query);
+      fetchVideos(query);
+      fetchPlaces(query);
+      fetchFavourites();
+    }
   }, []);
 
   return (
@@ -104,6 +113,16 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchFavourites: () => {
       dispatch(fetchFavourites());
+    },
+    fetchMedia: (location) => {
+      console.log('fetching media');
+      dispatch(fetchMedia(location));
+    },
+    fetchVideos: (location) => {
+      dispatch(fetchVideos(location));
+    },
+    fetchPlaces: (location) => {
+      dispatch(fetchPlaces(location));
     }
   };
 };

@@ -47,7 +47,6 @@ function Searchbar() {
   const classes = useStyles();
   const [location, setLocation] = React.useState('');
   const [type, setType] = React.useState('photos');
-  // const [toResults, setToResults] = React.useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -64,15 +63,12 @@ function Searchbar() {
     if (type === 'travelvlogs') {
       dispatch(setDisplayFilter('video'));
       dispatch(fetchVideos(location));
-    }
+    };
+
+    sessionStorage.setItem('query', location);
     event.preventDefault();
-    history.push('/results');
-    // setToResults(true);
-    // if (toResults === true) {
-    //   setToResults(false);
-    //   history.push('/results')
-    // }
-  };
+    history.push('/results')
+  }
 
   return (
     <div>
