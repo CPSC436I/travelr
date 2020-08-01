@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { fetchMedia } from "../../redux/media/mediaActions";
+import { fetchMedia, fetchPlaces, fetchVideos } from "../../redux/media/mediaActions";
 import { connect } from 'react-redux';
 
 const BootstrapInput = withStyles((theme) => ({
@@ -54,6 +54,8 @@ function Searchbar() {
 
   const handleSubmit = (event) => {
     dispatch(fetchMedia(location));
+    dispatch(fetchVideos(location));
+    dispatch(fetchPlaces(location));
     event.preventDefault();
     history.push('/results')
     // setToResults(true);
