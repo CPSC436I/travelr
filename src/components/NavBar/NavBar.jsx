@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import travelr from '../../img/travelr.svg';
 import Searchbar from './Searchbar';
-import { connect } from 'react-redux';
+import GoogleButton from '../buttons/GoogleButton';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PrimarySearchAppBar() {
+function NavBar() {
   const [userData, setUser] = useContext(UserProvider.context);
 
   const classes = useStyles();
@@ -76,7 +76,7 @@ function PrimarySearchAppBar() {
           <Link to="/profile" color="inherit">
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
           </Link>
-          <Link to="/saved" color="inherit">
+          <Link to="/favourites" color="inherit">
             <MenuItem onClick={handleMenuClose}>Favourites</MenuItem>
           </Link>
           <Link to="/logout" color="inherit">
@@ -102,8 +102,8 @@ function PrimarySearchAppBar() {
           {
             !_.isEmpty(userData) ?
               <div className={classes.sectionDesktop}>
-                <Link to="/saved" className={classes.navButton}>
-                  <Button variant="outlined" >Saved</Button>
+                <Link to="/favourites" className={classes.navButton}>
+                  <Button variant="outlined" >Favourites</Button>
                 </Link>
                 <Link to="/calendar" className={classes.navButton}>
                   <Button variant="outlined" >Calendar</Button>
@@ -125,9 +125,7 @@ function PrimarySearchAppBar() {
                 </IconButton>
               </div> :
               <div className={classes.sectionDesktop}>
-                <Link to="/login" color="inherit">
-                  <Button variant="outlined" >Login</Button>
-                </Link>
+                <GoogleButton />
               </div>
           }
         </Toolbar>
@@ -137,4 +135,4 @@ function PrimarySearchAppBar() {
   );
 }
 
-export default PrimarySearchAppBar;
+export default NavBar;
