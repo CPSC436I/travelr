@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Login from './components/Login';
 import Logout from './components/Logout';
 import MainCalendar from './components/Calendar/MainCalendar';
 import MyTrips from './components/Trips/TripsList';
@@ -25,7 +24,6 @@ function App() {
         <Route path="/calendar" component={MainCalendar} />
         <Route path="/trips" component={MyTrips} />
         <Route path="/logout" component={Logout} />
-        <Route path="/login" component={Login} />
       </UserProvider>
       <Switch>
         <Route path="/" component={LandingPage} exact />
