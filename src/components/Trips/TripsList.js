@@ -7,6 +7,7 @@ import {
   List, ListItem
 } from '@material-ui/core';
 import NewTripModal from './NewTripModal';
+import AddFavouriteButton from './AddFavouriteButton';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -24,6 +25,7 @@ function TripsList({trips}){
     <List>
     {trips.slice(0).reverse().map((trip, index) => React.cloneElement(TripsListItem(trip, index, deleteTrip)))}
     </List>
+    <AddFavouriteButton/>
     </div>
   );
 }
