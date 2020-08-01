@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { fetchMedia, fetchPlaces, fetchVideos } from "../../redux/media/mediaActions";
+import { fetchMedia, fetchPlaces, fetchVideos, setDisplayFilter } from "../../redux/media/mediaActions";
 import { connect } from 'react-redux';
 
 const BootstrapInput = withStyles((theme) => ({
@@ -53,17 +53,26 @@ function Searchbar() {
   const history = useHistory();
 
   const handleSubmit = (event) => {
-    dispatch(fetchMedia(location));
-    dispatch(fetchVideos(location));
-    dispatch(fetchPlaces(location));
+    if (type === 'attractions') {
+      dispatch(setDisplayFilter('place'));
+      dispatch(fetchPlaces(location));
+    }
+    if (type === 'photos') {
+      dispatch(setDisplayFilter('media'));
+      dispatch(fetchMedia(location));
+    }
+    if (type === 'travelvlogs') {
+      dispatch(setDisplayFilter('video'));
+      dispatch(fetchVideos(location));
+    }
     event.preventDefault();
-    history.push('/results')
+    history.push('/results');
     // setToResults(true);
     // if (toResults === true) {
     //   setToResults(false);
     //   history.push('/results')
     // }
-  }
+  };
 
   return (
     <div>

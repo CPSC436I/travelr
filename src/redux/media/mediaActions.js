@@ -15,7 +15,10 @@ import {
     FETCH_VIDEOS_FAILURE,
     FETCH_PLACES_REQUEST,
     FETCH_PLACES_SUCCESS,
-    FETCH_PLACES_FAILURE
+    FETCH_PLACES_FAILURE,
+    SET_DISPLAY_FILTER_MEDIA,
+    SET_DISPLAY_FILTER_VIDEO,
+    SET_DISPLAY_FILTER_PLACE
 } from './mediaTypes.js';
 
 import axios from 'axios';
@@ -264,5 +267,23 @@ export const fetchPlaces = (query) => {
           .catch(error => {
               dispatch(fetchPlacesFailure(error.message));
           })
+    }
+}
+
+export const setDisplayFilter = (mediaType) => {
+    if (mediaType === 'place') {
+        return {
+            type: SET_DISPLAY_FILTER_PLACE
+        }
+    }
+    if (mediaType === 'media') {
+        return {
+            type: SET_DISPLAY_FILTER_MEDIA
+        }
+    }
+    if (mediaType === 'video') {
+        return {
+            type: SET_DISPLAY_FILTER_VIDEO
+        }
     }
 }
