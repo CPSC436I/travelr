@@ -9,7 +9,7 @@ const UserProvider = ({ children }) => {
         axios({
             method: 'GET',
             withCredentials: true,
-            url: 'http://localhost:9000/auth/user'
+            url: `${process.env.REACT_APP_API_URI}/auth/user`
           }).then((res) => {
               console.log(res);
               setUser(res.data);

@@ -22,7 +22,7 @@ function Login() {
         password: registerPassword
       },
       withCredentials: true,
-      url: 'http://localhost:9000/auth/register'
+      url: `${process.env.REACT_APP_API_URI}/auth/register`
     }).then((res) => console.log(res));
   };
   const login = () => {
@@ -33,7 +33,7 @@ function Login() {
         password: loginPassword
       },
       withCredentials: true,
-      url: 'http://localhost:9000/auth/login'
+      url: `${process.env.REACT_APP_API_URI}/auth/login`
     }).then((res) => {
       console.log(res)
       setUser(res);
@@ -44,7 +44,7 @@ function Login() {
     axios({
       method: 'GET',
       withCredentials: true,
-      url: 'http://localhost:9000/auth/user'
+      url: `${process.env.REACT_APP_API_URI}/auth/user`
     }).then((res) => console.log(res));
   };
 
