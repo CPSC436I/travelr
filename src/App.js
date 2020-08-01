@@ -20,7 +20,6 @@ function App() {
         <NavBar />
         <Route path="/profile" component={Profile} />
         <Route path="/saved" component={Favourites} />
-        <Route path="/calendar" component={MainCalendar} />
         <Route path="/trips" component={MyTrips} />
         <Route path="/logout" component={Logout} />
       </UserProvider>

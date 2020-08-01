@@ -15,7 +15,11 @@ import {
     FETCH_VIDEOS_FAILURE,
     FETCH_PLACES_REQUEST,
     FETCH_PLACES_SUCCESS,
-    FETCH_PLACES_FAILURE
+    FETCH_PLACES_FAILURE,
+    SET_DISPLAY_FILTER,
+    SET_DISPLAY_FILTER_MEDIA,
+    SET_DISPLAY_FILTER_VIDEO,
+    SET_DISPLAY_FILTER_PLACE
 } from './mediaTypes.js';
 
 const initialState = {
@@ -210,9 +214,43 @@ const placesReducer = (state = initialPlaces, action) => {
 
 };
 
+const initialDisplay = {
+    showMedia: false,
+    showVideos: false,
+    showPlaces: false
+};
+
+const displayReducer = (state = initialDisplay, action) => {
+    switch (action.type) {
+        case SET_DISPLAY_FILTER_MEDIA:
+            return {
+                ...state,
+                showMedia: true,
+                showVideos: false,
+                showPlaces: false
+            }
+        case SET_DISPLAY_FILTER_VIDEO:
+            return {
+                ...state,
+                showMedia: false,
+                showVideos: true,
+                showPlaces: false
+            }
+        case SET_DISPLAY_FILTER_PLACE:
+            return {
+                ...state,
+                showMedia: false,
+                showVideos: false,
+                showPlaces: true
+            }
+        default: return state;
+    }
+};
+
 export const mediaReducer = {
     media: mediaState,
     folders: foldersReducer,
     videos: videosReducer,
-    places: placesReducer
+    places: placesReducer,
+    searchBarFilter: displayReducer
 };

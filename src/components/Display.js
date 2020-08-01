@@ -26,44 +26,50 @@ const styles = makeStyles => ({
   }
 });
 
-function mergeMediaAndVideos (query, media, folders, videos, places) {
-  let mediaContent = media.map((imgInState) => {
-    return <Grid item xs={4} key={imgInState.id}>
-      <Media
-        media={imgInState}
-        query={query}
-        saved={folders
-          .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
-      />
-    </Grid>;
-  });
-  let videoContent = videos.map((videoId) => {
-    return <Grid item xs={6} key={videoId}>
-      <Media
-        video={videoId}
-        query={query}
-        saved={folders
-          .find(folder => folder.images.find(img => img.id === videoId) !== undefined) !== undefined} />
-    </Grid>;
-  });
-  let allContent = mediaContent.concat(videoContent);
-  let placesContent = places.map((place) => {
-    if (place !== null) {
-      return <Grid item xs={4} key={place.photoUrl}>
+function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFilter) {
+  let filteredContent;
+  if (searchBarFilter.showPlaces) {
+    filteredContent = places.map((place) => {
+      if (place !== null) {
+        return <Grid item xs={4} key={place.photoUrl}>
+          <Media
+            place={place}
+            query={query}
+            saved={folders
+              .find(folder => folder.images.find(img => img.id === place.id) !== undefined) !== undefined}
+          />
+        </Grid>;
+      }
+    });
+  }
+  if (searchBarFilter.showMedia) {
+    filteredContent = media.map((imgInState) => {
+      return <Grid item xs={4} key={imgInState.id}>
         <Media
-          place={place}
+          media={imgInState}
           query={query}
           saved={folders
-            .find(folder => folder.images.find(img => img.id === place.id) !== undefined) !== undefined}
+            .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
         />
       </Grid>;
-    }
-  });
-  allContent = allContent.concat(placesContent);
-  return allContent;
+    });
+  }
+  if (searchBarFilter.showVideos) {
+    filteredContent = videos.map((videoId) => {
+      return <Grid item xs={6} key={videoId}>
+        <Media
+          video={videoId}
+          query={query}
+          saved={folders
+            .find(folder => folder.images.find(img => img.id === videoId) !== undefined) !== undefined} />
+      </Grid>;
+    });
+  }
+  return filteredContent;
 }
 
-function Display ({ query, media, folders, fetchFavourites, videos, places , fetchMedia, fetchVideos, fetchPlaces}) {
+
+function Display ({ query, media, folders, fetchFavourites, videos, places , fetchMedia, fetchVideos, fetchPlaces, searchBarFilter }) {
   useEffect(() => {
     query = sessionStorage.getItem('query');
     console.log(query);
@@ -84,9 +90,9 @@ function Display ({ query, media, folders, fetchFavourites, videos, places , fet
       justify='center'
       alignContent='center'
     >
-      {media.length === 0 ? (
+      {media.length === 0 && videos.length === 0 && places.length === 0 ? (
         null
-      ) : mergeMediaAndVideos(query, media, folders, videos, places)
+      ) : mergeMediaAndVideos(query, media, folders, videos, places, searchBarFilter)
       }
     </Grid>
   );
@@ -98,7 +104,8 @@ const mapStateToProps = (state) => {
     media: state.media.results,
     folders: state.folders.folders,
     videos: state.videos.ids,
-    places: state.places.places
+    places: state.places.places,
+    searchBarFilter: state.searchBarFilter
   };
 };
 
