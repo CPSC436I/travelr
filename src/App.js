@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Login from './components/Login';
 import Logout from './components/Logout';
 import MyTrips from './components/Trips/TripsList';
 import SampleTrip from './components/Trips/TripPageNew';
@@ -23,7 +22,6 @@ function App() {
         <Route path="/favourites" component={SavedDisplay} />
         <Route path="/trips" component={MyTrips} />
         <Route path="/logout" component={Logout} />
-        <Route path="/login" component={Login} />
       </UserProvider>
       <Switch>
         <Route path="/" component={LandingPage} exact />

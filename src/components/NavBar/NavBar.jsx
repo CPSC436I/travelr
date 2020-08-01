@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import travelr from '../../img/travelr.svg';
 import Searchbar from './Searchbar';
-import { connect } from 'react-redux';
+import GoogleButton from '../buttons/GoogleButton';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PrimarySearchAppBar() {
+function NavBar() {
   const [userData, setUser] = useContext(UserProvider.context);
 
   const classes = useStyles();
@@ -125,9 +125,7 @@ function PrimarySearchAppBar() {
                 </IconButton>
               </div> :
               <div className={classes.sectionDesktop}>
-                <Link to="/login" color="inherit">
-                  <Button variant="outlined" >Login</Button>
-                </Link>
+                <GoogleButton />
               </div>
           }
         </Toolbar>
@@ -137,4 +135,4 @@ function PrimarySearchAppBar() {
   );
 }
 
-export default PrimarySearchAppBar;
+export default NavBar;
