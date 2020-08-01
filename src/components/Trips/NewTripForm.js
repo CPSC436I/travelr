@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PublicIcon from '@material-ui/icons/Public';
 import { connect } from 'react-redux';
-import { addTrip } from '../../redux/trips/tripsActions'
+import { addTrip, saveTrip } from '../../redux/trips/tripsActions'
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +43,7 @@ function NewTripForm({handleClose}) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (numberOfDays <= 10) {
+      dispatch(addTrip({tripName, numberOfDays}));
       dispatch(addTrip({tripName, numberOfDays}));
       handleClose();
     }
@@ -110,6 +111,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addTrip: (tripData) => {
             dispatch(addTrip(tripData));
+        },
+        saveTrip: (trip) => {
+          dispatch(saveTrip(trip));
         }
     }
 };
