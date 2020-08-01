@@ -13,7 +13,7 @@ function Logout() {
             method: 'GET',
             data: {},
             withCredentials: true,
-            url: 'http://localhost:9000/auth/logout'
+            url: `${process.env.REACT_APP_API_URI}/auth/logout`
         }).then(res => {
             console.log(res);
             setUser(null);
