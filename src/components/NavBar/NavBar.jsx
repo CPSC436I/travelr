@@ -76,7 +76,7 @@ function PrimarySearchAppBar() {
           <Link to="/profile" color="inherit">
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
           </Link>
-          <Link to="/saved" color="inherit">
+          <Link to="/favourites" color="inherit">
             <MenuItem onClick={handleMenuClose}>Favourites</MenuItem>
           </Link>
           <Link to="/logout" color="inherit">
@@ -102,8 +102,8 @@ function PrimarySearchAppBar() {
           {
             !_.isEmpty(userData) ?
               <div className={classes.sectionDesktop}>
-                <Link to="/saved" className={classes.navButton}>
-                  <Button variant="outlined" >Saved</Button>
+                <Link to="/favourites" className={classes.navButton}>
+                  <Button variant="outlined" >Favourites</Button>
                 </Link>
                 <Link to="/calendar" className={classes.navButton}>
                   <Button variant="outlined" >Calendar</Button>
