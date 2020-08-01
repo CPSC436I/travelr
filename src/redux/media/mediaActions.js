@@ -58,6 +58,7 @@ const fetchMediaFailure = error => {
 
 export const fetchMedia = destination => {
     return (dispatch) => {
+        console.log('fetching media for destination: ' + destination)
         dispatch(fetchMediaRequest);
         unsplash.search.photos(destination, 1, 12, { orientation: 'landscape' })
             .then(toJson)
