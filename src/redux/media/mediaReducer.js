@@ -79,8 +79,7 @@ const foldersReducer = (state = initialFolders, action) => {
             let filters = new Set();
             action.payload.forEach(item => {
                 item.tags.forEach(tag => {
-                    if (tag.type === "search")
-                        filters.add(tag.title);
+                        filters.add(tag);
                 });
             });
             return {

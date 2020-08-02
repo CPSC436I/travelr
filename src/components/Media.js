@@ -23,7 +23,9 @@ const findTitle = (tags) => {
 
 function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
   const toggleMediaSave = () => {
+    query = sessionStorage.getItem('query');
     media.mediaType = 'media';
+    media.tags = [query];
     toggleSaveMedia('default', media, !saved);
   };
 
@@ -42,6 +44,7 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
   };
 
   if (media) {
+    query = sessionStorage.getItem('query');
     return (
       <Card key={media.id}>
         <CardMedia
@@ -52,7 +55,7 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
         />
         <CardContent />
         <CardActions>
-          <Button size='small' >{findTitle(media.tags).title}</Button>
+          <Button size='small' >{query}</Button>
           <IconButton aria-label='add to favorites' onClick={toggleMediaSave}>
             <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
 

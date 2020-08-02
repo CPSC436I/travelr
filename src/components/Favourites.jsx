@@ -90,7 +90,7 @@ function Favourites({ folders, fetchFavourites }) {
                 .filter(image => {
                   if (selectedFilters.length === 0) return true;
                   const intersection = Object.values(image.tags).filter(tag => {
-                    return selectedFilters.includes(tag.title);
+                    return selectedFilters.includes(tag);
                   });
                   return intersection.length > 0;
                 })
