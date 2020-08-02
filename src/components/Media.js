@@ -32,6 +32,7 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
   };
 
   const toggleVideoSave = () => {
+    query = sessionStorage.getItem('query');
     let videoObj = {
       id: video,
       tags: [query],

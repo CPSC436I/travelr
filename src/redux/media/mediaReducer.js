@@ -19,7 +19,10 @@ import {
     SET_DISPLAY_FILTER,
     SET_DISPLAY_FILTER_MEDIA,
     SET_DISPLAY_FILTER_VIDEO,
-    SET_DISPLAY_FILTER_PLACE
+    SET_DISPLAY_FILTER_PLACE,
+    CLEAR_MEDIA,
+    CLEAR_PLACES,
+    CLEAR_VIDEOS
 } from './mediaTypes.js';
 
 const initialState = {
@@ -39,7 +42,7 @@ const mediaState = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                ...action.payload,
+                results: [...state.results, ...action.payload.results],
                 error: ''
             }
         case FETCH_MEDIA_FAILURE:
@@ -48,6 +51,11 @@ const mediaState = (state = initialState, action) => {
                 loading: false,
                 results: [],
                 error: action.payload
+            }
+        case CLEAR_MEDIA:
+            return {
+                ...state,
+                results: []
             }
         default: return state
     }
@@ -153,7 +161,8 @@ const foldersReducer = (state = initialFolders, action) => {
 const initialVideos = {
     loading: false,
     ids: [],
-    error: ''
+    error: '',
+    nextPageToken: ''
 };
 
 const videosReducer = (state = initialVideos, action) => {
@@ -167,7 +176,8 @@ const videosReducer = (state = initialVideos, action) => {
             return {
                 ...state,
                 loading: false,
-                ...action.payload,
+                ids: [...state.ids, ...action.payload.ids],
+                nextPageToken: action.payload.nextPageToken,
                 error: ''
             }
         case FETCH_VIDEOS_FAILURE:
@@ -177,6 +187,12 @@ const videosReducer = (state = initialVideos, action) => {
                 ids: [],
                 error: action.payload
             }
+        case CLEAR_VIDEOS:
+            return {
+                ...state,
+                ids: [],
+                nextPageToken: ''
+            }
         default: return state;
     }
 
@@ -185,7 +201,8 @@ const videosReducer = (state = initialVideos, action) => {
 const initialPlaces = {
     loading: false,
     places: [],
-    error: ''
+    error: '',
+    nextPageToken: ''
 };
 
 const placesReducer = (state = initialPlaces, action) => {
@@ -199,8 +216,9 @@ const placesReducer = (state = initialPlaces, action) => {
             return {
                 ...state,
                 loading: false,
-                ...action.payload,
-                error: ''
+                places: [...state.places, ...action.payload.places],
+                error: '',
+                nextPageToken: action.payload.pageToken
             }
         case FETCH_PLACES_FAILURE:
             return {
@@ -208,6 +226,12 @@ const placesReducer = (state = initialPlaces, action) => {
                 loading: false,
                 places: [],
                 error: action.payload
+            }
+        case CLEAR_PLACES:
+            return {
+                ...state,
+                places: [],
+                nextPageToken: ''
             }
         default: return state;
     }

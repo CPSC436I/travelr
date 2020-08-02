@@ -76,7 +76,7 @@ function NavBar() {
           <Link to="/profile" color="inherit">
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
           </Link>
-          <Link to="/favourites" color="inherit">
+          <Link to="/saved" color="inherit">
             <MenuItem onClick={handleMenuClose}>Favourites</MenuItem>
           </Link>
           <Link to="/logout" color="inherit">
@@ -102,7 +102,7 @@ function NavBar() {
           {
             !_.isEmpty(userData) ?
               <div className={classes.sectionDesktop}>
-                <Link to="/favourites" className={classes.navButton}>
+                <Link to="/saved" className={classes.navButton}>
                   <Button variant="outlined" >Favourites</Button>
                 </Link>
                 <Link to="/calendar" className={classes.navButton}>
