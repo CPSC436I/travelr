@@ -3,8 +3,8 @@ import './App.css';
 import { Login } from './Login';
 import MainCalendar from './Calendar/MainCalendar';
 import CPopper from './Calendar/CPopper';
-import MyTrips from './Trips/TripsList';
-import SampleTrip from './Trips/TripPageNew';
+import TripsHome from './Trips/TripsHome';
+import TripsBoard from './Trips/TripsBoard';
 import Display from './Display';
 import NavBar from './NavBar';
 import LandingPage from './LandingPage';
@@ -23,13 +23,13 @@ function App() {
         <Route path="/results" component={Display} />
         <Route path="/saved" component={SavedDisplay} />
         <Route path="/calendar" component={MainCalendar} />
-        <Route path="/trips" component={MyTrips} />
-        <Route path="/sampleTrip" component={SampleTrip} />
+        <Route exact path="/trips" component={TripsHome} />
+        <Route exact path="/trips/:tripID" component={TripsBoard} />
         <Route path="/profile" component={Profile} />
         <Route path="/logout"
           component={() => {
             fetch('http://localhost:9000/auth/logout',
-              { 
+              {
                   method: 'GET',
               }
           )
