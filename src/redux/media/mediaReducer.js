@@ -16,13 +16,22 @@ import {
     FETCH_PLACES_REQUEST,
     FETCH_PLACES_SUCCESS,
     FETCH_PLACES_FAILURE,
-    SET_DISPLAY_FILTER,
+    FETCH_RESTAURANTS_FAILURE,
+    FETCH_RESTAURANTS_REQUEST,
+    FETCH_RESTAURANTS_SUCCESS,
+    FETCH_EVENTS_FAILURE,
+    FETCH_EVENTS_REQUEST,
+    FETCH_EVENTS_SUCCESS,
     SET_DISPLAY_FILTER_MEDIA,
     SET_DISPLAY_FILTER_VIDEO,
     SET_DISPLAY_FILTER_PLACE,
+    SET_DISPLAY_FILTER_RESTAURANT,
+    SET_DISPLAY_FILTER_EVENT,
     CLEAR_MEDIA,
     CLEAR_PLACES,
-    CLEAR_VIDEOS
+    CLEAR_VIDEOS,
+    CLEAR_RESTAURANTS,
+    CLEAR_EVENTS
 } from './mediaTypes.js';
 
 const initialState = {
@@ -237,10 +246,87 @@ const placesReducer = (state = initialPlaces, action) => {
 
 };
 
+const initialRestaurants = {
+    loading: false,
+    restaurants: [],
+    error: ''
+};
+
+const restaurantsReducer = (state = initialRestaurants, action) => {
+    switch (action.type) {
+        case FETCH_RESTAURANTS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_RESTAURANTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                restaurants: [...state.restaurants, ...action.payload.restaurants],
+                error: ''
+            }
+        case FETCH_RESTAURANTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                restaurants: [],
+                error: action.payload
+            }
+        case CLEAR_RESTAURANTS:
+            return {
+                ...state,
+                restaurants: []
+            }
+        default: return state;
+    }
+
+};
+
+const initialEvents = {
+    loading: false,
+    events: [],
+    error: ''
+};
+
+const eventsReducer = (state = initialEvents, action) => {
+    switch (action.type) {
+        case FETCH_EVENTS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_EVENTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                events: [...state.events, ...action.payload.events],
+                error: ''
+            }
+        case FETCH_EVENTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                events: [],
+                error: action.payload
+            }
+        case CLEAR_EVENTS:
+            return {
+                ...state,
+                events: []
+            }
+        default: return state;
+    }
+
+};
+
+
 const initialDisplay = {
     showMedia: false,
     showVideos: false,
-    showPlaces: false
+    showPlaces: false,
+    showRestaurants: false,
+    showEvents: false
 };
 
 const displayReducer = (state = initialDisplay, action) => {
@@ -250,21 +336,45 @@ const displayReducer = (state = initialDisplay, action) => {
                 ...state,
                 showMedia: true,
                 showVideos: false,
-                showPlaces: false
+                showPlaces: false,
+                showRestaurants: false,
+                showEvents: false
             }
         case SET_DISPLAY_FILTER_VIDEO:
             return {
                 ...state,
                 showMedia: false,
                 showVideos: true,
-                showPlaces: false
+                showPlaces: false,
+                showRestaurants: false,
+                showEvents: false
             }
         case SET_DISPLAY_FILTER_PLACE:
             return {
                 ...state,
                 showMedia: false,
                 showVideos: false,
-                showPlaces: true
+                showPlaces: true,
+                showRestaurants: false,
+                showEvents: false
+            }
+        case SET_DISPLAY_FILTER_RESTAURANT:
+            return {
+                ...state,
+                showMedia: false,
+                showVideos: false,
+                showPlaces: false,
+                showRestaurants: true,
+                showEvents: false
+            }
+        case SET_DISPLAY_FILTER_EVENT:
+            return {
+                ...state,
+                showMedia: false,
+                showVideos: false,
+                showPlaces: false,
+                showRestaurants: false,
+                showEvents: true
             }
         default: return state;
     }
@@ -275,5 +385,7 @@ export const mediaReducer = {
     folders: foldersReducer,
     videos: videosReducer,
     places: placesReducer,
+    restaurants: restaurantsReducer,
+    events: eventsReducer,
     searchBarFilter: displayReducer
 };

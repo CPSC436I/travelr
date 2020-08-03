@@ -9,9 +9,13 @@ import { fetchFavourites,
   fetchVideos,
   fetchPlaces,
   fetchMedia,
+  fetchRestaurants,
+  fetchEvents,
   fetchMoreMedia,
   fetchMoreVideos,
-  fetchMorePlaces } from '../redux';
+  fetchMorePlaces,
+  fetchMoreRestaurants,
+  fetchMoreEvents } from '../redux';
 
 let mediaIndex = 1;
 
@@ -31,7 +35,7 @@ const styles = makeStyles => ({
   }
 });
 
-function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFilter) {
+function mergeMediaAndVideos (query, media, folders, videos, places, restaurants, events, searchBarFilter) {
   let filteredContent;
   if (searchBarFilter.showPlaces) {
     filteredContent = places.map((place) => {
@@ -70,10 +74,32 @@ function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFi
       </Grid>;
     });
   }
+  if (searchBarFilter.showRestaurants) {
+    filteredContent = restaurants.map((restaurantObj) => {
+      return <Grid item xs={4} key={restaurantObj.id}>
+        <Media
+          restaurant={restaurantObj}
+          query={query}
+          saved={folders
+            .find(folder => folder.images.find(img => img.id === restaurantObj.id) !== undefined) !== undefined} />
+      </Grid>;
+    });
+  }
+  if (searchBarFilter.showEvents) {
+    filteredContent = events.map((eventObj) => {
+      return <Grid item xs={4} key={eventObj.id}>
+        <Media
+          event={eventObj}
+          query={query}
+          saved={folders
+            .find(folder => folder.images.find(img => img.id === eventObj.id) !== undefined) !== undefined} />
+      </Grid>;
+    });
+  }
   return filteredContent;
 }
 
-function Display ({ query, media, folders, fetchFavourites, videos, places, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
+function Display ({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
   useEffect(() => {
     query = sessionStorage.getItem('query');
     if (query) {
@@ -93,6 +119,10 @@ function Display ({ query, media, folders, fetchFavourites, videos, places, sear
       dispatch(fetchMoreVideos(query, videoNextPageToken));
     } else if (searchBarFilter === 'place') {
       dispatch(fetchMorePlaces(query, placeNextPageToken));
+    } else if (searchBarFilter === 'restaurant') {
+      dispatch(fetchMoreRestaurants(query));
+    } else if (searchBarFilter === 'event') {
+      dispatch(fetchMoreEvents(query));
     }
   };
 
@@ -106,9 +136,9 @@ function Display ({ query, media, folders, fetchFavourites, videos, places, sear
         justify='center'
         alignContent='center'
       >
-        {media.length === 0 && videos.length === 0 && places.length === 0 ? (
+        {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
           null
-        ) : mergeMediaAndVideos(query, media, folders, videos, places, searchBarFilter)
+        ) : mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter)
         }
       </Grid>
     </BottomScrollListener>
@@ -122,6 +152,8 @@ const mapStateToProps = (state) => {
     folders: state.folders.folders,
     videos: state.videos.ids,
     places: state.places.places,
+    restaurants: state.restaurants.restaurants,
+    events: state.events.events,
     searchBarFilter: state.searchBarFilter,
     videoNextPageToken: state.videos.nextPageToken,
     placeNextPageToken: state.places.nextPageToken
@@ -141,6 +173,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchPlaces: (location) => {
       dispatch(fetchPlaces(location));
+    },
+    fetchRestaurants: (location) => {
+      dispatch(fetchRestaurants(location));
+    },
+    fetchEvents: (location) => {
+      dispatch(fetchEvents(location));
     }
   };
 };
