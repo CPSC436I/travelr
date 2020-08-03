@@ -9,22 +9,27 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import { session } from 'passport';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = makeStyles => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
     margin: 'auto'
-  },
-  title: {
-    fontSize: 14
   },
   grid: {
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
     direction: 'row'
+  },
+  title: {
+    fontSize: 15,
+    textAlign: 'center',
+    minWidth: 300,
+    padding: 10,
+    color: 'grey',
+    margin: theme.spacing(1)
   }
-});
+}));
 
 function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFilter) {
   let filteredContent;
@@ -70,6 +75,8 @@ function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFi
 
 
 function Display ({ query, media, folders, fetchFavourites, videos, places , fetchMedia, fetchVideos, fetchPlaces, searchBarFilter }) {
+  const classes = useStyles();
+
   useEffect(() => {
     query = sessionStorage.getItem('query');
     console.log(query);
@@ -82,6 +89,10 @@ function Display ({ query, media, folders, fetchFavourites, videos, places , fet
   }, []);
 
   return (
+    <div className={classes.root}>
+    <h1 className={classes.title}>
+    Showing search results for {sessionStorage.getItem('query')}
+    </h1>
     <Grid
       container
       flexgrow={1}
@@ -95,6 +106,7 @@ function Display ({ query, media, folders, fetchFavourites, videos, places , fet
       ) : mergeMediaAndVideos(query, media, folders, videos, places, searchBarFilter)
       }
     </Grid>
+    </div>
   );
 }
 
@@ -127,6 +139,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const DisplayContainer = connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Display));
+const DisplayContainer = connect(mapStateToProps, mapDispatchToProps)(Display);
 
 export default DisplayContainer;

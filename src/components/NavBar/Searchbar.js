@@ -23,7 +23,7 @@ const BootstrapInput = withStyles((theme) => ({
   input: {
     borderRadius: 4,
     position: 'relative',
-    minWidth: 120,
+    minWidth: 90,
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
@@ -39,7 +39,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   paper: {
-    border: 0
+    border: 0,
+    display: 'row'
+  },
+  button: {
+    borderRadius: 4,
+    position: 'relative',
+    minWidth: 90,
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
   }
 }));
 

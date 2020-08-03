@@ -49,12 +49,10 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
           image={media.urls.small}
           title={media.description}
         />
-        <CardContent />
         <CardActions>
           <Button size='small' >{findTitle(media.tags).title}</Button>
           <IconButton aria-label='add to favorites' onClick={toggleMediaSave}>
             <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
-
           </IconButton>
         </CardActions>
       </Card>
