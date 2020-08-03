@@ -21,9 +21,11 @@ const findTitle = (tags) => {
   }
 };
 
-function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
+function Media ({ media, saved, video, place, restaurant, event, query, toggleSaveMedia }) {
   const toggleMediaSave = () => {
+    query = sessionStorage.getItem('query');
     media.mediaType = 'media';
+    media.tags = [query];
     toggleSaveMedia('default', media, !saved);
   };
 
@@ -32,6 +34,7 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
   };
 
   const toggleVideoSave = () => {
+    query = sessionStorage.getItem('query');
     let videoObj = {
       id: video,
       tags: [query],
@@ -40,7 +43,18 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
     toggleSaveMedia('default', videoObj, !saved);
   };
 
+  const toggleRestaurantSave = () => {
+    query = sessionStorage.getItem('query');
+    toggleSaveMedia('default', restaurant, !saved);
+  }
+
+  const toggleEventSave = () => {
+    query = sessionStorage.getItem('query');
+    toggleSaveMedia('default', event, !saved);
+  }
+
   if (media) {
+    query = sessionStorage.getItem('query');
     return (
       <Card key={media.id}>
         <CardMedia
@@ -50,7 +64,7 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
           title={media.description}
         />
         <CardActions>
-          <Button size='small' >{findTitle(media.tags).title}</Button>
+          <Button size='small' >{query}</Button>
           <IconButton aria-label='add to favorites' onClick={toggleMediaSave}>
             <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
           </IconButton>
@@ -85,6 +99,38 @@ function Media ({ media, saved, video, place, query, toggleSaveMedia }) {
       <CardActions>
         <Button size='small' >{place.name}</Button>
         <IconButton aria-label='add to favorites' onClick={togglePlaceSave}>
+          <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
+        </IconButton>
+      </CardActions>
+    </Card>;
+  } else if (restaurant) {
+    return <Card key={restaurant.id}>
+      <CardMedia
+        component='img'
+        height='240'
+        image={restaurant.photoUrl}
+        title={restaurant.name}
+      />
+      <CardContent />
+      <CardActions>
+        <Button size='small' >{restaurant.name}</Button>
+        <IconButton aria-label='add to favorites' onClick={toggleRestaurantSave}>
+          <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
+        </IconButton>
+      </CardActions>
+    </Card>;
+  } else if (event) {
+    return <Card key={event.id}>
+      <CardMedia
+        component='img'
+        height='240'
+        image={event.photoUrl}
+        title={event.name}
+      />
+      <CardContent />
+      <CardActions>
+        <Button size='small' >{event.name}</Button>
+        <IconButton aria-label='add to favorites' onClick={toggleEventSave}>
           <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
         </IconButton>
       </CardActions>

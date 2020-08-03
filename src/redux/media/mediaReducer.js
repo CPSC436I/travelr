@@ -16,10 +16,22 @@ import {
     FETCH_PLACES_REQUEST,
     FETCH_PLACES_SUCCESS,
     FETCH_PLACES_FAILURE,
-    SET_DISPLAY_FILTER,
+    FETCH_RESTAURANTS_FAILURE,
+    FETCH_RESTAURANTS_REQUEST,
+    FETCH_RESTAURANTS_SUCCESS,
+    FETCH_EVENTS_FAILURE,
+    FETCH_EVENTS_REQUEST,
+    FETCH_EVENTS_SUCCESS,
     SET_DISPLAY_FILTER_MEDIA,
     SET_DISPLAY_FILTER_VIDEO,
-    SET_DISPLAY_FILTER_PLACE
+    SET_DISPLAY_FILTER_PLACE,
+    SET_DISPLAY_FILTER_RESTAURANT,
+    SET_DISPLAY_FILTER_EVENT,
+    CLEAR_MEDIA,
+    CLEAR_PLACES,
+    CLEAR_VIDEOS,
+    CLEAR_RESTAURANTS,
+    CLEAR_EVENTS
 } from './mediaTypes.js';
 
 const initialState = {
@@ -39,7 +51,7 @@ const mediaState = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                ...action.payload,
+                results: [...state.results, ...action.payload.results],
                 error: ''
             }
         case FETCH_MEDIA_FAILURE:
@@ -48,6 +60,11 @@ const mediaState = (state = initialState, action) => {
                 loading: false,
                 results: [],
                 error: action.payload
+            }
+        case CLEAR_MEDIA:
+            return {
+                ...state,
+                results: []
             }
         default: return state
     }
@@ -71,8 +88,7 @@ const foldersReducer = (state = initialFolders, action) => {
             let filters = new Set();
             action.payload.forEach(item => {
                 item.tags.forEach(tag => {
-                    if (tag.type === "search")
-                        filters.add(tag.title);
+                        filters.add(tag);
                 });
             });
             return {
@@ -153,7 +169,8 @@ const foldersReducer = (state = initialFolders, action) => {
 const initialVideos = {
     loading: false,
     ids: [],
-    error: ''
+    error: '',
+    nextPageToken: ''
 };
 
 const videosReducer = (state = initialVideos, action) => {
@@ -167,7 +184,8 @@ const videosReducer = (state = initialVideos, action) => {
             return {
                 ...state,
                 loading: false,
-                ...action.payload,
+                ids: [...state.ids, ...action.payload.ids],
+                nextPageToken: action.payload.nextPageToken,
                 error: ''
             }
         case FETCH_VIDEOS_FAILURE:
@@ -177,6 +195,12 @@ const videosReducer = (state = initialVideos, action) => {
                 ids: [],
                 error: action.payload
             }
+        case CLEAR_VIDEOS:
+            return {
+                ...state,
+                ids: [],
+                nextPageToken: ''
+            }
         default: return state;
     }
 
@@ -185,7 +209,8 @@ const videosReducer = (state = initialVideos, action) => {
 const initialPlaces = {
     loading: false,
     places: [],
-    error: ''
+    error: '',
+    nextPageToken: ''
 };
 
 const placesReducer = (state = initialPlaces, action) => {
@@ -199,8 +224,9 @@ const placesReducer = (state = initialPlaces, action) => {
             return {
                 ...state,
                 loading: false,
-                ...action.payload,
-                error: ''
+                places: [...state.places, ...action.payload.places],
+                error: '',
+                nextPageToken: action.payload.pageToken
             }
         case FETCH_PLACES_FAILURE:
             return {
@@ -209,15 +235,98 @@ const placesReducer = (state = initialPlaces, action) => {
                 places: [],
                 error: action.payload
             }
+        case CLEAR_PLACES:
+            return {
+                ...state,
+                places: [],
+                nextPageToken: ''
+            }
         default: return state;
     }
 
 };
 
+const initialRestaurants = {
+    loading: false,
+    restaurants: [],
+    error: ''
+};
+
+const restaurantsReducer = (state = initialRestaurants, action) => {
+    switch (action.type) {
+        case FETCH_RESTAURANTS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_RESTAURANTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                restaurants: [...state.restaurants, ...action.payload.restaurants],
+                error: ''
+            }
+        case FETCH_RESTAURANTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                restaurants: [],
+                error: action.payload
+            }
+        case CLEAR_RESTAURANTS:
+            return {
+                ...state,
+                restaurants: []
+            }
+        default: return state;
+    }
+
+};
+
+const initialEvents = {
+    loading: false,
+    events: [],
+    error: ''
+};
+
+const eventsReducer = (state = initialEvents, action) => {
+    switch (action.type) {
+        case FETCH_EVENTS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case FETCH_EVENTS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                events: [...state.events, ...action.payload.events],
+                error: ''
+            }
+        case FETCH_EVENTS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                events: [],
+                error: action.payload
+            }
+        case CLEAR_EVENTS:
+            return {
+                ...state,
+                events: []
+            }
+        default: return state;
+    }
+
+};
+
+
 const initialDisplay = {
     showMedia: false,
     showVideos: false,
-    showPlaces: false
+    showPlaces: false,
+    showRestaurants: false,
+    showEvents: false
 };
 
 const displayReducer = (state = initialDisplay, action) => {
@@ -227,21 +336,45 @@ const displayReducer = (state = initialDisplay, action) => {
                 ...state,
                 showMedia: true,
                 showVideos: false,
-                showPlaces: false
+                showPlaces: false,
+                showRestaurants: false,
+                showEvents: false
             }
         case SET_DISPLAY_FILTER_VIDEO:
             return {
                 ...state,
                 showMedia: false,
                 showVideos: true,
-                showPlaces: false
+                showPlaces: false,
+                showRestaurants: false,
+                showEvents: false
             }
         case SET_DISPLAY_FILTER_PLACE:
             return {
                 ...state,
                 showMedia: false,
                 showVideos: false,
-                showPlaces: true
+                showPlaces: true,
+                showRestaurants: false,
+                showEvents: false
+            }
+        case SET_DISPLAY_FILTER_RESTAURANT:
+            return {
+                ...state,
+                showMedia: false,
+                showVideos: false,
+                showPlaces: false,
+                showRestaurants: true,
+                showEvents: false
+            }
+        case SET_DISPLAY_FILTER_EVENT:
+            return {
+                ...state,
+                showMedia: false,
+                showVideos: false,
+                showPlaces: false,
+                showRestaurants: false,
+                showEvents: true
             }
         default: return state;
     }
@@ -252,5 +385,7 @@ export const mediaReducer = {
     folders: foldersReducer,
     videos: videosReducer,
     places: placesReducer,
+    restaurants: restaurantsReducer,
+    events: eventsReducer,
     searchBarFilter: displayReducer
 };

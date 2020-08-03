@@ -11,7 +11,17 @@ import Paper from '@material-ui/core/Paper';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { fetchMedia, fetchPlaces, fetchVideos, setDisplayFilter } from "../../redux/media/mediaActions";
+import { fetchMedia,
+  fetchPlaces,
+  fetchVideos,
+  fetchRestaurants,
+  fetchEvents,
+  setDisplayFilter,
+  clearMedia,
+  clearVideos,
+  clearPlaces,
+  clearRestaurants,
+  clearEvents } from "../../redux/media/mediaActions";
 import { connect } from 'react-redux';
 
 const BootstrapInput = withStyles((theme) => ({
@@ -54,26 +64,55 @@ const useStyles = makeStyles((theme) => ({
 function Searchbar() {
   const classes = useStyles();
   const [location, setLocation] = React.useState('');
-  const [type, setType] = React.useState('photos');
+  const [type, setType] = React.useState('media');
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleSubmit = (event) => {
-    if (type === 'attractions') {
+    if (type === 'place') {
+      dispatch(clearPlaces());
       dispatch(setDisplayFilter('place'));
+      dispatch(clearMedia());
+      dispatch(clearVideos());
+      dispatch(clearRestaurants());
       dispatch(fetchPlaces(location));
     }
-    if (type === 'photos') {
+    if (type === 'media') {
+      dispatch(clearMedia());
       dispatch(setDisplayFilter('media'));
+      dispatch(clearVideos());
+      dispatch(clearPlaces());
+      dispatch(clearRestaurants());
       dispatch(fetchMedia(location));
     }
-    if (type === 'travelvlogs') {
+    if (type === 'video') {
+      dispatch(clearVideos());
       dispatch(setDisplayFilter('video'));
+      dispatch(clearMedia());
+      dispatch(clearPlaces());
+      dispatch(clearRestaurants());
       dispatch(fetchVideos(location));
-    };
+    }
+    if (type === 'restaurant') {
+      dispatch(clearRestaurants());
+      dispatch(setDisplayFilter('restaurant'));
+      dispatch(clearMedia());
+      dispatch(clearPlaces());
+      dispatch(clearVideos());
+      dispatch(fetchRestaurants(location));
+    }
+    if (type === 'event') {
+      dispatch(clearEvents());
+      dispatch(setDisplayFilter('event'));
+      dispatch(clearMedia());
+      dispatch(clearPlaces());
+      dispatch(clearVideos());
+      dispatch(fetchEvents(location));
+    }
 
     sessionStorage.setItem('query', location);
+    sessionStorage.setItem('searchBarFilter', type);
     event.preventDefault();
     history.push('/results')
   }
@@ -101,10 +140,11 @@ function Searchbar() {
           <MenuItem value='type' disabled>
             Type
           </MenuItem>
-          <MenuItem value={'photos'}>Photos</MenuItem>
-          <MenuItem value={'travelvlogs'}>Travel vlogs</MenuItem>
-          <MenuItem value={'attractions'}>Attractions</MenuItem>
-          <MenuItem value={'food'}>Food</MenuItem>
+          <MenuItem value={'media'}>Photography</MenuItem>
+          <MenuItem value={'video'}>Travel vlogs</MenuItem>
+          <MenuItem value={'place'}>Attractions</MenuItem>
+          <MenuItem value={'restaurant'}>Food</MenuItem>
+          <MenuItem value={'event'}>Events</MenuItem>
         </Select>
       </FormControl>
       <IconButton type="submit" className={classes.margin} aria-label="search"  >

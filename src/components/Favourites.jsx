@@ -90,7 +90,7 @@ function Favourites({ folders, fetchFavourites }) {
                 .filter(image => {
                   if (selectedFilters.length === 0) return true;
                   const intersection = Object.values(image.tags).filter(tag => {
-                    return selectedFilters.includes(tag.title);
+                    return selectedFilters.includes(tag);
                   });
                   return intersection.length > 0;
                 })
@@ -114,6 +114,22 @@ function Favourites({ folders, fetchFavourites }) {
                       return <Grid item xs={4} key={imgInState.id}>
                         <Media
                           media={imgInState}
+                          saved={folders.folders
+                            .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
+                            />
+                      </Grid>;
+                    } else if (imgInState.mediaType === 'restaurant') {
+                      return <Grid item xs={4} key={imgInState.id}>
+                        <Media
+                          restaurant={imgInState}
+                          saved={folders.folders
+                            .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
+                            />
+                      </Grid>;
+                    } else if (imgInState.mediaType === 'event') {
+                      return <Grid item xs={4} key={imgInState.id}>
+                        <Media
+                          event={imgInState}
                           saved={folders.folders
                             .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
                             />
