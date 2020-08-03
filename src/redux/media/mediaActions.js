@@ -16,18 +16,26 @@ import {
     FETCH_PLACES_REQUEST,
     FETCH_PLACES_SUCCESS,
     FETCH_PLACES_FAILURE,
+    FETCH_RESTAURANTS_FAILURE,
+    FETCH_RESTAURANTS_REQUEST,
+    FETCH_RESTAURANTS_SUCCESS,
+    FETCH_EVENTS_FAILURE,
+    FETCH_EVENTS_REQUEST,
+    FETCH_EVENTS_SUCCESS,
     SET_DISPLAY_FILTER_MEDIA,
     SET_DISPLAY_FILTER_VIDEO,
     SET_DISPLAY_FILTER_PLACE,
+    SET_DISPLAY_FILTER_RESTAURANT,
+    SET_DISPLAY_FILTER_EVENT,
     CLEAR_MEDIA,
     CLEAR_PLACES,
-    CLEAR_VIDEOS
+    CLEAR_VIDEOS,
+    CLEAR_RESTAURANTS,
+    CLEAR_EVENTS
 } from './mediaTypes.js';
 
 import axios from 'axios';
-
 import Unsplash, { toJson } from 'unsplash-js';
-
 axios.defaults.withCredentials = true;
 
 const unsplash = new Unsplash(
@@ -40,6 +48,8 @@ const TRAVELR_API = process.env.REACT_APP_API_URI;
 const FAVOURITES_URL = `${TRAVELR_API}/favourites`;
 const VIDEOS_URL = `${TRAVELR_API}/findVideos`;
 const PLACES_URL = `${TRAVELR_API}/findPlaces`;
+const RESTAURANTS_URL = `${TRAVELR_API}/findRestaurants`; 
+const EVENTS_URL = `${TRAVELR_API}/findEvents`;
 
 
 const fetchMediaRequest = () => {
@@ -352,6 +362,152 @@ export const clearPlaces = () => {
     }
 }
 
+const fetchRestaurantsRequest = () => {
+    return {
+        type: FETCH_RESTAURANTS_REQUEST
+    }
+}
+
+const fetchRestaurantsSuccess = content => {
+    return {
+        type: FETCH_RESTAURANTS_SUCCESS,
+        payload: content
+    }
+}
+
+const fetchRestaurantsFailure = error => {
+    return {
+        type: FETCH_RESTAURANTS_FAILURE,
+        payload: error
+    }
+}
+
+export const fetchRestaurants = (query) => {
+    return (dispatch) => {
+        dispatch(fetchRestaurantsRequest());
+        fetch(RESTAURANTS_URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              destination: query
+            })
+          })
+          .then(toJson)
+          .then(json => {
+              dispatch(fetchRestaurantsSuccess(json));
+          })
+          .catch(error => {
+              dispatch(fetchRestaurantsFailure(error.message));
+          })
+    }   
+}
+
+export const fetchMoreRestaurants = (query) => {
+    return (dispatch) => {
+        dispatch(fetchRestaurantsRequest());
+        fetch(RESTAURANTS_URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              destination: query,
+              getMore: true
+            })
+          })
+          .then(toJson)
+          .then(json => {
+              dispatch(fetchRestaurantsSuccess(json));
+          })
+          .catch(error => {
+              dispatch(fetchRestaurantsFailure(error.message));
+          })
+    }   
+}
+
+export const clearRestaurants = () => {
+    return {
+        type: CLEAR_RESTAURANTS
+    }
+}
+
+const fetchEventsRequest = () => {
+    return {
+        type: FETCH_EVENTS_REQUEST
+    }
+}
+
+const fetchEventsSuccess = content => {
+    return {
+        type: FETCH_EVENTS_SUCCESS,
+        payload: content
+    }
+}
+
+const fetchEventsFailure = error => {
+    return {
+        type: FETCH_EVENTS_FAILURE,
+        payload: error
+    }
+}
+
+export const fetchEvents = (query) => {
+    return (dispatch) => {
+        dispatch(fetchEventsRequest());
+        fetch(EVENTS_URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              destination: query
+            })
+          })
+          .then(toJson)
+          .then(json => {
+              dispatch(fetchEventsSuccess(json));
+          })
+          .catch(error => {
+              dispatch(fetchEventsFailure(error.message));
+          })
+    }   
+}
+
+export const fetchMoreEvents = (query) => {
+    return (dispatch) => {
+        dispatch(fetchEventsRequest());
+        fetch(EVENTS_URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              destination: query,
+              getMore: true
+            })
+          })
+          .then(toJson)
+          .then(json => {
+              dispatch(fetchEventsSuccess(json));
+          })
+          .catch(error => {
+              dispatch(fetchEventsFailure(error.message));
+          })
+    }   
+}
+
+export const clearEvents = () => {
+    return {
+        type: CLEAR_EVENTS
+    }
+}
+
 export const setDisplayFilter = (mediaType) => {
     if (mediaType === 'place') {
         return {
@@ -366,6 +522,16 @@ export const setDisplayFilter = (mediaType) => {
     if (mediaType === 'video') {
         return {
             type: SET_DISPLAY_FILTER_VIDEO
+        }
+    }
+    if (mediaType === 'restaurant') {
+        return {
+            type: SET_DISPLAY_FILTER_RESTAURANT
+        }
+    }
+    if (mediaType === 'event') {
+        return {
+            type: SET_DISPLAY_FILTER_EVENT
         }
     }
 }

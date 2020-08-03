@@ -14,10 +14,14 @@ import { useHistory } from "react-router-dom";
 import { fetchMedia,
   fetchPlaces,
   fetchVideos,
+  fetchRestaurants,
+  fetchEvents,
   setDisplayFilter,
   clearMedia,
   clearVideos,
-  clearPlaces } from "../../redux/media/mediaActions";
+  clearPlaces,
+  clearRestaurants,
+  clearEvents } from "../../redux/media/mediaActions";
 import { connect } from 'react-redux';
 
 const BootstrapInput = withStyles((theme) => ({
@@ -63,6 +67,7 @@ function Searchbar() {
       dispatch(setDisplayFilter('place'));
       dispatch(clearMedia());
       dispatch(clearVideos());
+      dispatch(clearRestaurants());
       dispatch(fetchPlaces(location));
     }
     if (type === 'media') {
@@ -70,6 +75,7 @@ function Searchbar() {
       dispatch(setDisplayFilter('media'));
       dispatch(clearVideos());
       dispatch(clearPlaces());
+      dispatch(clearRestaurants());
       dispatch(fetchMedia(location));
     }
     if (type === 'video') {
@@ -77,8 +83,25 @@ function Searchbar() {
       dispatch(setDisplayFilter('video'));
       dispatch(clearMedia());
       dispatch(clearPlaces());
+      dispatch(clearRestaurants());
       dispatch(fetchVideos(location));
-    };
+    }
+    if (type === 'restaurant') {
+      dispatch(clearRestaurants());
+      dispatch(setDisplayFilter('restaurant'));
+      dispatch(clearMedia());
+      dispatch(clearPlaces());
+      dispatch(clearVideos());
+      dispatch(fetchRestaurants(location));
+    }
+    if (type === 'event') {
+      dispatch(clearEvents());
+      dispatch(setDisplayFilter('event'));
+      dispatch(clearMedia());
+      dispatch(clearPlaces());
+      dispatch(clearVideos());
+      dispatch(fetchEvents(location));
+    }
 
     sessionStorage.setItem('query', location);
     sessionStorage.setItem('searchBarFilter', type);
@@ -112,7 +135,8 @@ function Searchbar() {
           <MenuItem value={'media'}>Photography</MenuItem>
           <MenuItem value={'video'}>Travel vlogs</MenuItem>
           <MenuItem value={'place'}>Attractions</MenuItem>
-          <MenuItem value={'food'}>Food</MenuItem>
+          <MenuItem value={'restaurant'}>Food</MenuItem>
+          <MenuItem value={'event'}>Events</MenuItem>
         </Select>
       </FormControl>
       <IconButton type="submit" className={classes.margin} aria-label="search"  >

@@ -99,6 +99,21 @@ function AddFavouriteButton ({ folders, fetchFavourites }) {
                         </CardActions>
                       </Card>
                     </Grid>;
+                  } else if (imgInState.mediaType === 'restaurant') {
+                    return <Grid item xs={4} key={imgInState.id}>
+                      <Card key={imgInState.id}>
+                        <CardMedia
+                          component='img'
+                          height={'100'}
+                          image={imgInState.photoUrl}
+                          title={imgInState.name}
+                        />
+                        <CardActions>
+                          <Button size='small' >{imgInState.tags[0]}</Button>
+                          <Checkbox checked={selectedFavourites.includes(imgInState.photoUrl)} onChange={handleChange} name={imgInState.photoUrl} />
+                        </CardActions>
+                      </Card>
+                    </Grid>;
                   }
                 })}
           </Grid>

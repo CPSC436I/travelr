@@ -118,6 +118,22 @@ function Favourites({ folders, fetchFavourites }) {
                             .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
                             />
                       </Grid>;
+                    } else if (imgInState.mediaType === 'restaurant') {
+                      return <Grid item xs={4} key={imgInState.id}>
+                        <Media
+                          restaurant={imgInState}
+                          saved={folders.folders
+                            .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
+                            />
+                      </Grid>;
+                    } else if (imgInState.mediaType === 'event') {
+                      return <Grid item xs={4} key={imgInState.id}>
+                        <Media
+                          event={imgInState}
+                          saved={folders.folders
+                            .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
+                            />
+                      </Grid>;
                     }
                   })}
             </Grid>
