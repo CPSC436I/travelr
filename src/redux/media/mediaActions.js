@@ -18,7 +18,10 @@ import {
     FETCH_PLACES_FAILURE,
     SET_DISPLAY_FILTER_MEDIA,
     SET_DISPLAY_FILTER_VIDEO,
-    SET_DISPLAY_FILTER_PLACE
+    SET_DISPLAY_FILTER_PLACE,
+    CLEAR_MEDIA,
+    CLEAR_PLACES,
+    CLEAR_VIDEOS
 } from './mediaTypes.js';
 
 import axios from 'axios';
@@ -61,7 +64,6 @@ const fetchMediaFailure = error => {
 
 export const fetchMedia = destination => {
     return (dispatch) => {
-        console.log('fetching media for destination: ' + destination)
         dispatch(fetchMediaRequest);
         unsplash.search.photos(destination, 1, 12, { orientation: 'landscape' })
             .then(toJson)
@@ -71,6 +73,26 @@ export const fetchMedia = destination => {
             .catch(error => {
                 dispatch(fetchMediaFailure(error.message));
             });
+    }
+}
+
+export const fetchMoreMedia = (destination, page) => {
+    return (dispatch) => {
+        dispatch(fetchMediaRequest);
+        unsplash.search.photos(destination, page, 12, { orientation: 'landscape' })
+            .then(toJson)
+            .then(json => {
+                dispatch(fetchMediaSuccess({ ...json, query: destination }));
+            })
+            .catch(error => {
+                dispatch(fetchMediaFailure(error.message));
+            });
+    }
+}
+
+export const clearMedia = () => {
+    return {
+        type: CLEAR_MEDIA
     }
 }
 
@@ -114,7 +136,6 @@ export const toggleSaveMedia = (folder, media, shouldSave) => {
         dispatch(saveMediaRequest);
         if (shouldSave) {
             /* save id to mongoDB */
-            console.log(JSON.stringify(media));
             let config = {
                 headers: {
                     'Accept': 'application/json',
@@ -228,6 +249,36 @@ export const fetchVideos = (query) => {
     }
 }
 
+export const fetchMoreVideos = (query, nextPageToken) => {
+    return (dispatch) => {
+        dispatch(fetchVideosRequest());
+        fetch(VIDEOS_URL, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                destination: query,
+                nextPageToken: nextPageToken
+            })
+        })
+            .then(toJson)
+            .then(json => {
+                dispatch(fetchVideosSuccess(json));
+            })
+            .catch(error => {
+                dispatch(fetchVideosFailure(error.message));
+            })
+    }
+}
+
+export const clearVideos = () => {
+    return {
+        type: CLEAR_VIDEOS
+    }
+}
+
 const fetchPlacesRequest = () => {
     return {
         type: FETCH_PLACES_REQUEST
@@ -268,6 +319,36 @@ export const fetchPlaces = (query) => {
           .catch(error => {
               dispatch(fetchPlacesFailure(error.message));
           })
+    }
+}
+
+export const fetchMorePlaces = (query, nextPageToken) => {
+    return (dispatch) => {
+        dispatch(fetchPlacesRequest());
+        fetch(PLACES_URL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              destination: query,
+              nextPageToken: nextPageToken
+            })
+          })
+          .then(toJson)
+          .then(json => {
+              dispatch(fetchPlacesSuccess(json));
+          })
+          .catch(error => {
+              dispatch(fetchPlacesFailure(error.message));
+          })
+    }
+}
+
+export const clearPlaces = () => {
+    return {
+        type: CLEAR_PLACES
     }
 }
 

@@ -2,13 +2,18 @@ import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import BottomScrollListener from 'react-bottom-scroll-listener';
+import { useDispatch } from "react-redux";
 import Media from './Media';
-import { fetchFavourites, fetchVideos, fetchPlaces, fetchMedia } from '../redux';
-// import getPlaceDetails from '../../api/routes/places';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import { session } from 'passport';
+import { fetchFavourites,
+  fetchVideos,
+  fetchPlaces,
+  fetchMedia,
+  fetchMoreMedia,
+  fetchMoreVideos,
+  fetchMorePlaces } from '../redux';
+
+let mediaIndex = 1;
 
 const styles = makeStyles => ({
   root: {
@@ -68,33 +73,45 @@ function mergeMediaAndVideos (query, media, folders, videos, places, searchBarFi
   return filteredContent;
 }
 
-
-function Display ({ query, media, folders, fetchFavourites, videos, places , fetchMedia, fetchVideos, fetchPlaces, searchBarFilter }) {
+function Display ({ query, media, folders, fetchFavourites, videos, places, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
   useEffect(() => {
     query = sessionStorage.getItem('query');
-    console.log(query);
     if (query) {
-      fetchMedia(query);
-      fetchVideos(query);
-      fetchPlaces(query);
       fetchFavourites();
     }
   }, []);
 
+  const dispatch = useDispatch();
+
+  const callback = () => {
+    query = sessionStorage.getItem('query');
+    searchBarFilter = sessionStorage.getItem('searchBarFilter');
+    if (searchBarFilter === 'media') {
+      mediaIndex = mediaIndex + 1;
+      dispatch(fetchMoreMedia(query, mediaIndex));
+    } else if (searchBarFilter === 'video') {
+      dispatch(fetchMoreVideos(query, videoNextPageToken));
+    } else if (searchBarFilter === 'place') {
+      dispatch(fetchMorePlaces(query, placeNextPageToken));
+    }
+  };
+
   return (
-    <Grid
-      container
-      flexgrow={1}
-      spacing={3}
-      direction='row'
-      justify='center'
-      alignContent='center'
-    >
-      {media.length === 0 && videos.length === 0 && places.length === 0 ? (
-        null
-      ) : mergeMediaAndVideos(query, media, folders, videos, places, searchBarFilter)
-      }
-    </Grid>
+    <BottomScrollListener onBottom={callback} >
+      <Grid
+        container
+        flexgrow={1}
+        spacing={3}
+        direction='row'
+        justify='center'
+        alignContent='center'
+      >
+        {media.length === 0 && videos.length === 0 && places.length === 0 ? (
+          null
+        ) : mergeMediaAndVideos(query, media, folders, videos, places, searchBarFilter)
+        }
+      </Grid>
+    </BottomScrollListener>
   );
 }
 
@@ -105,7 +122,9 @@ const mapStateToProps = (state) => {
     folders: state.folders.folders,
     videos: state.videos.ids,
     places: state.places.places,
-    searchBarFilter: state.searchBarFilter
+    searchBarFilter: state.searchBarFilter,
+    videoNextPageToken: state.videos.nextPageToken,
+    placeNextPageToken: state.places.nextPageToken
   };
 };
 
@@ -115,7 +134,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchFavourites());
     },
     fetchMedia: (location) => {
-      console.log('fetching media');
       dispatch(fetchMedia(location));
     },
     fetchVideos: (location) => {
