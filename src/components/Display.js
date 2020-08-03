@@ -5,15 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import { useDispatch } from "react-redux";
 import Media from './Media';
-<<<<<<< HEAD
-import { fetchFavourites, fetchVideos, fetchPlaces, fetchMedia } from '../redux';
-// import getPlaceDetails from '../../api/routes/places';
-import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import { session } from 'passport';
 import { makeStyles } from '@material-ui/core/styles';
-=======
 import { fetchFavourites,
   fetchVideos,
   fetchPlaces,
@@ -27,7 +19,6 @@ import { fetchFavourites,
   fetchMoreEvents } from '../redux';
 
 let mediaIndex = 1;
->>>>>>> eac320478d5f1f50542d4a60e522e4d961c3a24f
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,6 +105,8 @@ function mergeMediaAndVideos(query, media, folders, videos, places, restaurants,
 }
 
 function Display({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
+  const classes = useStyles();
+
   useEffect(() => {
     query = sessionStorage.getItem('query');
     if (query) {
@@ -141,7 +134,7 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <BottomScrollListener onBottom={callback} >
         <h1 className={classes.title}>
           Showing search results for {sessionStorage.getItem('query')}
