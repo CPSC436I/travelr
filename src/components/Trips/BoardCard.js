@@ -53,6 +53,7 @@ const BoardCard = React.memo(function (props) {
   };
 
   const cardMediaHelper = (content) => {
+    console.log('made it here', content);
     let image = "", title = "";
     if (content.mediaType === 'media') {
       image = content.urls.small;

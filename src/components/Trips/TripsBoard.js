@@ -52,7 +52,8 @@ function TripsBoard (props) {
   };
   const handleAddCards = (selectedCards, tripID, listIndex) => {
     setTrip(props.addCards(selectedCards, tripID, listIndex));
-    forceUpdate();
+    // mapTripDays();
+    // forceUpdate();
   }
 
   const mapTripDays = () => {
