@@ -72,7 +72,6 @@ function Searchbar() {
     sessionStorage.setItem('searchBarFilter', type);
     let query = sessionStorage.getItem('query');
 
-    console.log('------------------> ' + query);
     if (type === 'place') {
       dispatch(clearPlaces());
       dispatch(setDisplayFilter('place'));
@@ -141,7 +140,7 @@ function Searchbar() {
             Type
           </MenuItem>
           <MenuItem value={'media'}>Photography</MenuItem>
-          <MenuItem value={'video'}>Travel vlogs</MenuItem>
+          <MenuItem value={'video'}>Travel Vlogs</MenuItem>
           <MenuItem value={'place'}>Attractions</MenuItem>
           <MenuItem value={'restaurant'}>Food</MenuItem>
           <MenuItem value={'event'}>Events</MenuItem>
