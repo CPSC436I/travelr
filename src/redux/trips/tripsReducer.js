@@ -91,10 +91,27 @@ const addTripHelper = (trips, action) => {
   return trips;
 };
 
+const addCardsHelper = (trips, action) => {
+  const tripID = action.payload.tripID, listIndex = action.payload.listIndex, selectedCards = action.payload.selectedCards;
+  let trip = trips.trips.find(obj => obj._id === tripID);
+  let list = trip.days[listIndex].content;
+  list.push(selectedCards);
+  const tripIndex = trips.trips.findIndex(obj => obj._id === tripID);
+  trips.trips[tripIndex].days[listIndex].content = list;
+  return trips;
+};
+
 const tripsState = (trips = initialTrips, action) => {
   switch (action.type) {
+    case 'ADD_TRIP_REDUX':
+      let newTrips = trips.trips;
+      newTrips.push(action.payload);
+      console.log(newTrips);
+      return {
+        ...trips,
+        trips: newTrips,
+      };
     case 'ADD_TRIP_REQUEST':
-      return addTripHelper(trips, action);
     case 'DELETE_TRIP_REQUEST':
     case 'FETCH_TRIPS_REQUEST':
     case 'UPDATE_TRIP_REQUEST':
@@ -102,9 +119,10 @@ const tripsState = (trips = initialTrips, action) => {
       ...trips,
       loading: true
     };
+    case 'ADD_TRIP_SUCCESS':
+      return addTripHelper(trips, action);
     case 'FETCH_TRIPS_SUCCESS':
     case 'UPDATE_TRIP_SUCCESS': //TODO: assumes BE returns all trips
-    case 'ADD_TRIP_SUCCESS':
     case 'DELETE_TRIP_SUCCESS':
     return {
       ...trips,
@@ -128,6 +146,8 @@ const tripsState = (trips = initialTrips, action) => {
     return moveHelper(trips, action);
     case 'DELETE_CARD':
     return deleteHelper(trips, action);
+    case 'ADD_CARDS':
+    return addCardsHelper(trips, action);
     default: return trips;
   };
 };

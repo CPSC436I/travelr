@@ -3,6 +3,7 @@ import BoardCard from "./BoardCard";
 import { Droppable } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
+import AddFavouriteButton from './AddFavouriteButton';
 
 const useStyles = makeStyles((theme) => ({
   DayContainer: {
@@ -47,7 +48,7 @@ function BoardList(props) {
   };
 
   return (
-    <div className={classes.DayContainer}> {day.name} add button <hr/>
+    <div className={classes.DayContainer}> {day.name}<hr/>
     <Droppable droppableId={props.index.toString()} direction="vertical" type="list">
     {provided => (
       <div
@@ -59,6 +60,7 @@ function BoardList(props) {
       </div>
     )}
     </Droppable>
+    <AddFavouriteButton addCards={props.addCards} tripID={tripID} listIndex={props.index}/>
     </div>
   );
 

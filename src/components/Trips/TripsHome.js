@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import TripsHomeItem from './TripsHomeItem';
 import { connect } from 'react-redux';
-import { fetchTrips } from '../../redux/trips/tripsActions';
+import { fetchTrips, addTrip } from '../../redux/trips/tripsActions';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   List, ListItem
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 function TripsHome(props){
   const classes = useStyles();
   const {trips} = props;
-
+  
   const renderBoards = () => {
     if (trips.loading) return <div>loading</div>;
     if (trips.error) return <div>{trips.error}</div>;
@@ -33,7 +33,7 @@ function TripsHome(props){
   };
   return (
     <div className={classes.list}>
-    <NewTripModal/>
+    <NewTripModal addTrip={props.addTrip}/>
     <List>
     {renderBoards()}
     </List>
@@ -50,6 +50,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchTrips: () => {
       dispatch(fetchTrips());
+    },
+    addTrip: (tripData) => {
+      dispatch(addTrip(tripData));
     },
   };
 };

@@ -1,5 +1,5 @@
 import { toJson } from 'unsplash-js';
-
+import { v4 as uuidv4 } from 'uuid';
 const TRAVELR_API = 'http://localhost:9000';
 const TRIPS_URL = `${TRAVELR_API}/trips`;
 
@@ -10,19 +10,19 @@ const TRIPS_URL = `${TRAVELR_API}/trips`;
 //     days: input.numberOfDays
 //   };
 // };
-// const addTripRequest = () => {
-//   return {
-//     type: 'ADD_TRIP_REQUEST'
-//   };
-// };
-// title: input.tripName,
-// days: input.numberOfDays
-const addTripRequest = (input) => {
+const addTripRequest = () => {
   return {
-    type: 'ADD_TRIP_REQUEST',
-    payload: input
+    type: 'ADD_TRIP_REQUEST'
   };
 };
+// title: input.tripName,
+// days: input.numberOfDays
+// const addTripRequest = (input) => {
+//   return {
+//     type: 'ADD_TRIP_REQUEST',
+//     payload: input
+//   };
+// };
 const addTripSuccess = (content) => {
   return {
     type: 'ADD_TRIP_SUCCESS',
@@ -35,20 +35,43 @@ const addTripFailure = (error) => {
     payload: error
   };
 };
-export const addTrip = input => {
-  return (dispatch) => {
-    dispatch(addTripRequest(input));
-    // dispatch(addTripRequest);
-    // fetch(TRIPS_URL, { method: 'POST', body: JSON.stringify(input) })
-    // .then(toJson)
-    // .then(json => {
-    //   dispatch(addTripSuccess(json));
-    // })
-    // .catch(error => {
-    //   dispatch(addTripFailure(error.message));
-    // });
+const addTripRedux = (trip) => {
+  return {
+    type: 'ADD_TRIP_REDUX',
+    payload: trip
   };
 };
+export const addTrip = input => {
+  const tripID = uuidv4();
+  let days = [];
+  for (let i = 1; i <= input.numberOfDays; i++) {
+    days.push({
+      name: "Day " + i,
+      content: []
+    });
+  }
+  const trip = {
+    _id: tripID,
+    name: input.tripName,
+    numberofdays: input.numberOfDays,
+    days: days
+  };
+  return (dispatch) => {
+    dispatch(addTripRedux(trip));
+  };
+  // return (dispatch) => {
+  //   dispatch(addTripRequest);
+  //   fetch(TRIPS_URL, { method: 'POST', body: JSON.stringify(trip) })
+  //   .then(toJson)
+  //   .then(json => {
+  //     dispatch(addTripSuccess(json));
+  //   })
+  //   .catch(error => {
+  //     dispatch(addTripFailure(error.message));
+  //   });
+  // };
+};
+
 const fetchTripsRequest = () => {
   return {
     type: 'FETCH_TRIPS_REQUEST'
@@ -108,79 +131,87 @@ export const updateTrip = (trip) => {
     .catch(err => {
       dispatch(updateTripFailure(err));
     });  };
-};
+  };
 
-const deleteTripRequest = () => {
-  return {
-    type: 'DELETE_TRIP_REQUEST'
+  const deleteTripRequest = () => {
+    return {
+      type: 'DELETE_TRIP_REQUEST'
+    };
   };
-};
-const deleteTripSuccess = (content) => {
-  return {
-    type: 'DELETE_TRIP_SUCCESS',
-    payload: content
+  const deleteTripSuccess = (content) => {
+    return {
+      type: 'DELETE_TRIP_SUCCESS',
+      payload: content
+    };
   };
-};
-const deleteTripFailure = (error) => {
-  return {
-    type: 'DELETE_TRIP_FAILURE',
-    payload: error
+  const deleteTripFailure = (error) => {
+    return {
+      type: 'DELETE_TRIP_FAILURE',
+      payload: error
+    };
   };
-};
-export const deleteTrip = trip => {
-  return (dispatch) => {
-    dispatch(deleteTripRequest);
-    fetch(TRIPS_URL, { method: 'DELETE', body: JSON.stringify(trip) })
-    .then(toJson)
-    .then(json => {
-      dispatch(deleteTripSuccess(json));
-    })
-    .catch(error => {
-      dispatch(deleteTripFailure(error.message));
-    });
+  export const deleteTrip = trip => {
+    return (dispatch) => {
+      dispatch(deleteTripRequest);
+      fetch(TRIPS_URL, { method: 'DELETE', body: JSON.stringify(trip) })
+      .then(toJson)
+      .then(json => {
+        dispatch(deleteTripSuccess(json));
+      })
+      .catch(error => {
+        dispatch(deleteTripFailure(error.message));
+      });
+    }
+  };
+
+  export const reorderCard = (tripID, source, destination) => {
+    return (dispatch) => {
+      dispatch({
+        type: 'REORDER_CARD',
+        payload: {
+          tripID,
+          source,
+          destination
+        }
+      });
+    };
+  };
+  export const moveCard = (tripID, source, destination) => {
+    return (dispatch) => {
+      dispatch({
+        type: 'MOVE_CARD',
+        payload: {
+          tripID,
+          source,
+          destination
+        }
+      });
+    };
+  };
+  export const deleteCard = (tripID, listIndex, cardID) => {
+    return (dispatch) => {
+      dispatch({
+        type: 'DELETE_CARD',
+        payload: {
+          tripID,
+          listIndex,
+          cardID
+        }
+      });
+    };
   }
-};
+  export const addCards = (selectedCards, tripID, listIndex) => {
+    return (dispatch) => {
+      dispatch({
+        type: 'ADD_CARDS',
+        payload: {selectedCards, tripID, listIndex}
+      });
+    }
+  }
 
-export const reorderCard = (tripID, source, destination) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'REORDER_CARD',
-      payload: {
-        tripID,
-        source,
-        destination
-      }
-    });
-  };
-};
-export const moveCard = (tripID, source, destination) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'MOVE_CARD',
-      payload: {
-        tripID,
-        source,
-        destination
-      }
-    });
-  };
-};
-export const deleteCard = (tripID, listIndex, cardID) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'DELETE_CARD',
-      payload: {
-        tripID,
-        listIndex,
-        cardID
-      }
-    });
-  };
-}
-
-// export const deleteTrip = text => {
-//   return {
-//     type: 'DELETE_TRIP',
-//     title: text
-//   };
-// };
+  // export const deleteTrip = text => {
+  //   return {
+  //     type: 'DELETE_TRIP',
+  //     title: text
+  //   };
+  // };

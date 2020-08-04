@@ -49,12 +49,15 @@ function TripsBoard (props) {
   const handleDeleteCard = (tripID, listIndex, cardID) => {
     setTrip(props.deleteCard(tripID, listIndex, cardID));
   };
+  const handleAddCards = (selectedCards, tripID, listIndex) => {
+    setTrip(props.addCards(selectedCards, tripID, listIndex));
+  }
 
   const mapTripDays = () => {
     if (trip.days) {
       return trip.days.map((day, index) => {
         return (
-          <BoardList trip={trip} day={day} index={index} key={tripID +"list"+ index} deleteCard={handleDeleteCard}/>
+          <BoardList trip={trip} day={day} index={index} key={tripID +"list"+ index} deleteCard={handleDeleteCard} addCards={handleAddCards}/>
         );
       });
     }
@@ -105,7 +108,10 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteCard: (tripID, listIndex, cardID) => {
       dispatch(deleteCard(tripID, listIndex, cardID));
-    }
+    },
+    addCards: (selectedCards, tripID, listIndex) => {
+      dispatch(addCards(selectedCards, tripID, listIndex));
+    },
   };
 };
 

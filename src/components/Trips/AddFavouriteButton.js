@@ -18,7 +18,7 @@ import {
 import Media from '../Media';
 import { fetchFavourites } from '../../redux/';
 
-function AddFavouriteButton ({ folders, fetchFavourites }) {
+function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listIndex}) {
   const [selectedFilters, setFilters] = React.useState([]);
   const [selectedFavourites, setFavourites] = React.useState([]);
 
@@ -49,6 +49,11 @@ function AddFavouriteButton ({ folders, fetchFavourites }) {
     console.log(selectedFavourites);
   };
   const [isOpen, changeIsOpen] = React.useState(false);
+
+  const handleAddCards = () => {
+    changeIsOpen(false);
+    addCards(selectedFavourites, tripID, listIndex);
+  };
   return (
     <div>
       <Dialog open={isOpen} onClose={() => changeIsOpen(false)}>
@@ -122,7 +127,7 @@ function AddFavouriteButton ({ folders, fetchFavourites }) {
           <Button
             color='primary'
             variant='contained'
-            onClick={() => changeIsOpen(false)}
+            onClick={() => handleAddCards()}
           >
             Add
           </Button>
