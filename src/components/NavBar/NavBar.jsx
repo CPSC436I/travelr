@@ -105,9 +105,6 @@ function NavBar() {
                 <Link to="/saved" className={classes.navButton}>
                   <Button variant="outlined" >Favourites</Button>
                 </Link>
-                <Link to="/calendar" className={classes.navButton}>
-                  <Button variant="outlined" >Calendar</Button>
-                </Link>
                 <Link to="/trips" className={classes.navButton}>
                   <Button variant="outlined" >Trips</Button>
                 </Link>
