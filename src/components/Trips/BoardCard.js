@@ -14,6 +14,8 @@ import { deleteCard } from "../../redux/trips/tripsActions";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const BoardCard = React.memo(function (props) {
   const {content, cardIndex } = props
   const classes = useStyles();
+  const dragID = uuidv4();
   // const [card, setCard] = useState({});
 
   // useEffect(()=>{
@@ -75,7 +78,7 @@ const BoardCard = React.memo(function (props) {
   };
 
   return (
-    <Draggable draggableId={content.id} index={cardIndex}>
+    <Draggable draggableId={dragID} index={cardIndex}>
     {provided => (
       <div
       {...provided.draggableProps}

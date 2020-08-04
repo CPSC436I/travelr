@@ -19,12 +19,14 @@ const tempTrip = {
   numberofdays: 0,
   days: []
 };
+const useForceUpdate = () => useState()[1];
 
 function TripsBoard (props) {
   const classes = useStyles();
   const { tripID } = useParams();
   const { trips } = props;
   const [trip, setTrip] = useState(tempTrip);
+  const forceUpdate = useForceUpdate();
 
   useEffect(()=>{
     let findTrip = trips.trips.find(trip => trip._id === tripID);
@@ -34,7 +36,7 @@ function TripsBoard (props) {
   const onDragEnd = result => {
     const { destination, source } = result;
     console.log(result);
-    if (!destination) return; // dropped outside of board
+    if (!destination) return; // dropped outside of board 
     const srceListID = source.droppableId;
     const destListID = destination.droppableId;
     if (srceListID === destListID) { //within the same list
@@ -50,6 +52,7 @@ function TripsBoard (props) {
   };
   const handleAddCards = (selectedCards, tripID, listIndex) => {
     setTrip(props.addCards(selectedCards, tripID, listIndex));
+    forceUpdate();
   }
 
   const mapTripDays = () => {

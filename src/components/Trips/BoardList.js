@@ -16,12 +16,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function BoardList(props) {
+const bList = React.memo(function BoardList(props) {
   const classes = useStyles();
   // const trip = props.trips.trips.find(trip => trip._id === props.tripID);
-  const trip = props.trip;
-  const tripID = trip._id;
+  const tripID = props.trip._id;
   const day = props.day;
+  // const [cardMap, setCardMap] = useState([]);
+  // const [content, setContent] = useState([]);
+
+  // useEffect(()=>{
+  //   let findTrip = props.trips.trips.find(trip => trip._id === tripID);
+  //   let findDay = findTrip.days[props.index];
+  //   setContent(findDay.content);
+  //   // setDay(findDay);
+  // },[props.trips.trips]);
+  //
+  // useEffect(()=>{
+  //   setCardMap(mapCards());
+  // },[props]);
   // const [dayContent, setDayContent] = useState([]);
   //
   // useEffect(()=>{
@@ -34,12 +46,12 @@ function BoardList(props) {
       return day.content.map((content, index) => {
         return (
           <BoardCard
-            content={content}
-            tripID={tripID}
-            listIndex={props.index}
-            cardIndex={index}
-            key={"list" + props.index+ "card"+index}
-            deleteCard={props.deleteCard}
+          content={content}
+          tripID={tripID}
+          listIndex={props.index}
+          cardIndex={index}
+          key={"list" + props.index+ "card"+index}
+          deleteCard={props.deleteCard}
           />
         );
       });
@@ -64,10 +76,10 @@ function BoardList(props) {
     </div>
   );
 
-};
+});
 const mapStateToProps = (state) => {
   return {
     trips: state.trips,
   };
 };
-export default connect(mapStateToProps,null)(BoardList);
+export default connect(mapStateToProps,null)(bList);
