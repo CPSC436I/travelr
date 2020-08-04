@@ -64,6 +64,7 @@ function mergeMediaAndVideos (query, media, folders, videos, places, restaurants
     });
   }
   if (searchBarFilter.showVideos) {
+    videos = videos.filter(videoId => videoId !== null);
     filteredContent = videos.map((videoId) => {
       return <Grid item xs={6} key={videoId}>
         <Media
