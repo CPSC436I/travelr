@@ -106,18 +106,7 @@ const foldersReducer = (state = initialFolders, action) => {
             return {
                 ...state,
                 loading: false,
-                folders: [{
-                    name: "default",
-                    images: [{
-                      id: "eltps1t7gDY",
-                      mediaType: 'media',
-                      tags: [],
-                      urls: {
-                        small: "https://images.unsplash.com/photo-1543097692-fa13c6cd8595?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0MzAyN30"
-                      },
-                      description: "woman riding on boat"
-                    }]
-                }]
+                folders: []
             }
         case SAVE_MEDIA_REQUEST:
             return {
