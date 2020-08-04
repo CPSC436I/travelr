@@ -135,6 +135,8 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
         </IconButton>
       </CardActions>
     </Card>;
+  } else {
+    return null;
   }
 }
 const mapDispatchToProps = (dispatch) => {
