@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import { useDispatch } from "react-redux";
 import Media from './Media';
+import { makeStyles } from '@material-ui/core/styles';
 import { fetchFavourites,
   fetchVideos,
   fetchPlaces,
@@ -19,23 +20,27 @@ import { fetchFavourites,
 
 let mediaIndex = 1;
 
-const styles = makeStyles => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
     margin: 'auto'
-  },
-  title: {
-    fontSize: 14
   },
   grid: {
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
     direction: 'row'
+  },
+  title: {
+    fontSize: 15,
+    textAlign: 'center',
+    minWidth: 300,
+    padding: 10,
+    color: 'grey',
+    margin: theme.spacing(1)
   }
-});
+}));
 
-function mergeMediaAndVideos (query, media, folders, videos, places, restaurants, events, searchBarFilter) {
+function mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter) {
   let filteredContent;
   if (searchBarFilter.showPlaces) {
     filteredContent = places.map((place) => {
@@ -100,7 +105,9 @@ function mergeMediaAndVideos (query, media, folders, videos, places, restaurants
   return filteredContent;
 }
 
-function Display ({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
+function Display({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
+  const classes = useStyles();
+
   useEffect(() => {
     query = sessionStorage.getItem('query');
     if (query) {
@@ -128,21 +135,26 @@ function Display ({ query, media, folders, fetchFavourites, videos, places, rest
   };
 
   return (
-    <BottomScrollListener onBottom={callback} >
-      <Grid
-        container
-        flexgrow={1}
-        spacing={3}
-        direction='row'
-        justify='center'
-        alignContent='center'
-      >
-        {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
-          null
-        ) : mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter)
-        }
-      </Grid>
-    </BottomScrollListener>
+    <div className={classes.root}>
+      <BottomScrollListener onBottom={callback} >
+        <h1 className={classes.title}>
+          Showing search results for {sessionStorage.getItem('query')}
+        </h1>
+        <Grid
+          container
+          flexgrow={1}
+          spacing={3}
+          direction='row'
+          justify='center'
+          alignContent='center'
+        >
+          {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
+            null
+          ) : mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter)
+          }
+        </Grid>
+      </BottomScrollListener>
+    </div>
   );
 }
 
@@ -184,6 +196,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const DisplayContainer = connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Display));
+const DisplayContainer = connect(mapStateToProps, mapDispatchToProps)(Display);
 
 export default DisplayContainer;
