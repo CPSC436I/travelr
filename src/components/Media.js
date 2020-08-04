@@ -55,6 +55,7 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
 
   if (media) {
     query = sessionStorage.getItem('query');
+    let mediaName = typeof media.tags[0] === 'string' ? media.tags[0] : query;
     return (
       <Card key={media.id}>
         <CardMedia
@@ -64,7 +65,7 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
           title={media.description}
         />
         <CardActions>
-          <Button size='small' >{media.tags[0]}</Button>
+          <Button size='small' >{mediaName}</Button>
           <IconButton aria-label='add to favorites' onClick={toggleMediaSave}>
             <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
           </IconButton>
