@@ -95,7 +95,7 @@ const addCardsHelper = (trips, action) => {
   const tripID = action.payload.tripID, listIndex = action.payload.listIndex, selectedCards = action.payload.selectedCards;
   let trip = trips.trips.find(obj => obj._id === tripID);
   let list = trip.days[listIndex].content;
-  list.push(selectedCards);
+  list.concat(selectedCards);
   const tripIndex = trips.trips.findIndex(obj => obj._id === tripID);
   trips.trips[tripIndex].days[listIndex].content = list;
   return trips;

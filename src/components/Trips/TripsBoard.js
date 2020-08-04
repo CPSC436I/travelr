@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import { DragDropContext } from "react-beautiful-dnd";
 import { makeStyles } from '@material-ui/core/styles';
-import { updateTrip, reorderCard, moveCard, deleteCard } from '../../redux/trips/tripsActions';
+import { updateTrip, reorderCard, moveCard, deleteCard, addCards } from '../../redux/trips/tripsActions';
 
 const useStyles = makeStyles((theme) => ({
   DaysContainer: {
