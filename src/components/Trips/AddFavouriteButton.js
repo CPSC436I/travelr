@@ -85,7 +85,7 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
                         />
                         <CardActions>
                           <Button size='small' >{imgInState.tags[0]}</Button>
-                          <Checkbox checked={selectedFavourites.includes(imgInState.urls.small)} onChange={handleChange} name={imgInState.urls.small} />
+                          <Checkbox checked={selectedFavourites.includes(imgInState)} onChange={handleChange} name={imgInState.urls.small} />
                         </CardActions>
                       </Card>
                     </Grid>;
@@ -100,7 +100,7 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
                         />
                         <CardActions>
                           <Button size='small' >{imgInState.tags[0]}</Button>
-                          <Checkbox checked={selectedFavourites.includes(imgInState.photoUrl)} onChange={handleChange} name={imgInState.photoUrl} />
+                          <Checkbox checked={selectedFavourites.includes(imgInState)} onChange={handleChange} name={imgInState.photoUrl} />
                         </CardActions>
                       </Card>
                     </Grid>;
@@ -115,7 +115,7 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
                         />
                         <CardActions>
                           <Button size='small' >{imgInState.tags[0]}</Button>
-                          <Checkbox checked={selectedFavourites.includes(imgInState.photoUrl)} onChange={handleChange} name={imgInState.photoUrl} />
+                          <Checkbox checked={selectedFavourites.includes(imgInState)} onChange={handleChange} name={imgInState.photoUrl} />
                         </CardActions>
                       </Card>
                     </Grid>;

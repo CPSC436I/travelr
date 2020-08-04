@@ -46,7 +46,7 @@ export const addTrip = input => {
   let days = [];
   for (let i = 1; i <= input.numberOfDays; i++) {
     days.push({
-      name: "Day " + i,
+      name: "DAY " + i,
       content: []
     });
   }

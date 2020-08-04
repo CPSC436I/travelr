@@ -1,5 +1,6 @@
 const img1 = {
   id: "_8EFj6ISA08",
+  mediaType: 'media',
   urls: {
     small: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0MzAyN30"
   },
@@ -7,6 +8,7 @@ const img1 = {
 };
 const img2 = {
   id: "eltps1t7gDY",
+  mediaType: 'media',
   urls: {
     small: "https://images.unsplash.com/photo-1543097692-fa13c6cd8595?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0MzAyN30"
   },
@@ -18,19 +20,19 @@ const tempTrip = {
   numberofdays: 3,
   days: [
     {
-      name: "day 1",
+      name: "DAY 1",
       content: [
         img1
       ]
     },
     {
-      name: "day 2",
+      name: "DAY 2",
       content: [
         img2
       ]
     },
     {
-      name: "day 3",
+      name: "DAY 3",
       content: [
 
       ]
@@ -41,7 +43,7 @@ const emptyTrip = {
   _id: "emptyID",
   name: "emptyNAME",
   numberofdays: 1,
-  days: [{name: 'day 1', content:[]}]
+  days: [{name: 'DAY 1', content:[]}]
 };
 const initialTrips = {
   loading: false,
@@ -105,8 +107,7 @@ const tripsState = (trips = initialTrips, action) => {
   switch (action.type) {
     case 'ADD_TRIP_REDUX':
       let newTrips = trips.trips;
-      newTrips.push(action.payload);
-      console.log(newTrips);
+      newTrips.unshift(action.payload);
       return {
         ...trips,
         trips: newTrips,

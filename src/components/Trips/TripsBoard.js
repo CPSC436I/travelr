@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   DaysContainer: {
     display: 'flex',
     'flex-direction': 'row',
-    'background-color': 'grey',
   }
 }));
 
