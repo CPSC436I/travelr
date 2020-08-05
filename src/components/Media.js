@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -55,6 +55,7 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
 
   if (media) {
     query = sessionStorage.getItem('query');
+    let mediaName = typeof media.tags[0] === 'string' ? media.tags[0] : query;
     return (
       <Card key={media.id}>
         <CardMedia
@@ -63,12 +64,10 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
           image={media.urls.small}
           title={media.description}
         />
-        <CardContent />
         <CardActions>
-          <Button size='small' >{query}</Button>
+          <Button size='small' >{mediaName}</Button>
           <IconButton aria-label='add to favorites' onClick={toggleMediaSave}>
             <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
-
           </IconButton>
         </CardActions>
       </Card>
@@ -76,13 +75,14 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
   } else if (video) {
     return (<Card>
       <CardMedia
+        id='iframeM'
         component='iframe'
         height='237'
         src={`https://www.youtube.com/embed/${video}`}
         title={'video'}
       />
       <CardActions>
-        <Button size='small'>{query} Travel Vlog</Button>
+        <Button size='small'> Travel Vlog</Button>
         <IconButton aria-label='add to favorites' onClick={toggleVideoSave}>
           <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
 
@@ -137,6 +137,8 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
         </IconButton>
       </CardActions>
     </Card>;
+  } else {
+    return null;
   }
 }
 const mapDispatchToProps = (dispatch) => {

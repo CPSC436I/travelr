@@ -8,8 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Paper from '@material-ui/core/Paper';
-import { Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchMedia,
   fetchPlaces,
@@ -22,7 +21,6 @@ import { fetchMedia,
   clearPlaces,
   clearRestaurants,
   clearEvents } from "../../redux/media/mediaActions";
-import { connect } from 'react-redux';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -33,7 +31,7 @@ const BootstrapInput = withStyles((theme) => ({
   input: {
     borderRadius: 4,
     position: 'relative',
-    minWidth: 120,
+    minWidth: 90,
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
@@ -49,7 +47,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   paper: {
-    border: 0
+    border: 0,
+    display: 'row'
+  },
+  button: {
+    borderRadius: 4,
+    position: 'relative',
+    minWidth: 90,
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
   }
 }));
 
@@ -62,13 +68,17 @@ function Searchbar() {
   const history = useHistory();
 
   const handleSubmit = (event) => {
+    sessionStorage.setItem('query', location);
+    sessionStorage.setItem('searchBarFilter', type);
+    let query = sessionStorage.getItem('query');
+
     if (type === 'place') {
       dispatch(clearPlaces());
       dispatch(setDisplayFilter('place'));
       dispatch(clearMedia());
       dispatch(clearVideos());
       dispatch(clearRestaurants());
-      dispatch(fetchPlaces(location));
+      dispatch(fetchPlaces(query));
     }
     if (type === 'media') {
       dispatch(clearMedia());
@@ -76,7 +86,7 @@ function Searchbar() {
       dispatch(clearVideos());
       dispatch(clearPlaces());
       dispatch(clearRestaurants());
-      dispatch(fetchMedia(location));
+      dispatch(fetchMedia(query));
     }
     if (type === 'video') {
       dispatch(clearVideos());
@@ -84,7 +94,7 @@ function Searchbar() {
       dispatch(clearMedia());
       dispatch(clearPlaces());
       dispatch(clearRestaurants());
-      dispatch(fetchVideos(location));
+      dispatch(fetchVideos(query));
     }
     if (type === 'restaurant') {
       dispatch(clearRestaurants());
@@ -92,7 +102,7 @@ function Searchbar() {
       dispatch(clearMedia());
       dispatch(clearPlaces());
       dispatch(clearVideos());
-      dispatch(fetchRestaurants(location));
+      dispatch(fetchRestaurants(query));
     }
     if (type === 'event') {
       dispatch(clearEvents());
@@ -100,11 +110,8 @@ function Searchbar() {
       dispatch(clearMedia());
       dispatch(clearPlaces());
       dispatch(clearVideos());
-      dispatch(fetchEvents(location));
+      dispatch(fetchEvents(query));
     }
-
-    sessionStorage.setItem('query', location);
-    sessionStorage.setItem('searchBarFilter', type);
     event.preventDefault();
     history.push('/results')
   }
@@ -133,7 +140,7 @@ function Searchbar() {
             Type
           </MenuItem>
           <MenuItem value={'media'}>Photography</MenuItem>
-          <MenuItem value={'video'}>Travel vlogs</MenuItem>
+          <MenuItem value={'video'}>Travel Vlogs</MenuItem>
           <MenuItem value={'place'}>Attractions</MenuItem>
           <MenuItem value={'restaurant'}>Food</MenuItem>
           <MenuItem value={'event'}>Events</MenuItem>
