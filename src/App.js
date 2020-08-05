@@ -1,16 +1,15 @@
 import React from 'react';
 import './App.css';
-import Logout from './components/Logout';
+import Logout from './components/pages/Logout';
 import MyTrips from './components/Trips/TripsList';
 import SampleTrip from './components/Trips/TripPageNew';
-import Display from './components/Display';
+import Display from './components/pages/Display';
 import NavBar from './components/NavBar/NavBar';
-import LandingPage from './components/LandingPage';
-import Profile from './components/Profile';
+import LandingPage from './components/pages/LandingPage';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import UserProvider from './contexts/UserProvider';
 import history from './history';
-import Favourites from './components/Favourites';
+import Favourites from './components/pages/Favourites';
 
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
     <Router history={history}>
       <UserProvider>
         <NavBar />
-        <Route path="/profile" component={Profile} />
         <Route path="/saved" component={Favourites} />
         <Route path="/trips" component={MyTrips} />
         <Route path="/logout" component={Logout} />

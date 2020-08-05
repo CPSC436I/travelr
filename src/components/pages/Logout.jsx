@@ -1,7 +1,7 @@
 import React, {useEffect, useContext} from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import UserProvider from '../contexts/UserProvider';
+import UserProvider from '../../contexts/UserProvider';
 
 
 function Logout() {

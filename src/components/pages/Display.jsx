@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import { useDispatch } from "react-redux";
-import Media from './Media';
+import Media from '../Media';
 import { makeStyles } from '@material-ui/core/styles';
 import { fetchFavourites,
   fetchVideos,
@@ -16,7 +16,7 @@ import { fetchFavourites,
   fetchMoreVideos,
   fetchMorePlaces,
   fetchMoreRestaurants,
-  fetchMoreEvents } from '../redux';
+  fetchMoreEvents } from '../../redux';
 
 let mediaIndex = 1;
 

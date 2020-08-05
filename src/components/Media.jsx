@@ -8,7 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 
 import { connect } from 'react-redux';
-import { toggleSaveMedia } from '../redux/';
+import { toggleSaveMedia } from '../redux';
 
 const findTitle = (tags) => {
   let tag = tags.find(tag => tag.type === 'search');
