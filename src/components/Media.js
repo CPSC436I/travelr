@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import {Button, Modal, makeStyles} from '@material-ui/core/';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -21,7 +21,23 @@ const findTitle = (tags) => {
   }
 };
 
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    borderRadius: 5,
+    outline: 'none'
+  },
+}));
+
 function Media ({ media, saved, video, place, restaurant, event, query, toggleSaveMedia }) {
+  const classes = useStyles();
   const toggleMediaSave = () => {
     query = sessionStorage.getItem('query');
     media.mediaType = 'media';
@@ -53,10 +69,42 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
     toggleSaveMedia('default', event, !saved);
   }
 
+  const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState('');
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const body = (
+    <div className={classes.paper}>
+      <h2 id="simple-modal-title">More information</h2>
+      <p id="simple-modal-description">
+        Coming soon {title}
+      </p>
+    </div>
+  );
+
+  const infoModal = (
+    <Modal
+        open={open}
+        onClose={handleClose}
+        className={classes.modal}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+  );
+
   if (media) {
     query = sessionStorage.getItem('query');
     let mediaName = typeof media.tags[0] === 'string' ? media.tags[0] : query;
-    return (
+    return <div>
       <Card key={media.id}>
         <CardMedia
           component='img'
@@ -65,15 +113,17 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
           title={media.description}
         />
         <CardActions>
-          <Button size='small' >{mediaName}</Button>
+          <Button size='small' onClick={handleOpen}>{mediaName}</Button>
           <IconButton aria-label='add to favorites' onClick={toggleMediaSave}>
             <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
           </IconButton>
         </CardActions>
       </Card>
-    );
+      {infoModal}
+    </div>
   } else if (video) {
-    return (<Card>
+    return <div>
+    <Card>
       <CardMedia
         id='iframeM'
         component='iframe'
@@ -82,61 +132,69 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
         title={'video'}
       />
       <CardActions>
-        <Button size='small'> Travel Vlog</Button>
+        <Button size='small' onClick={handleOpen}> Travel Vlog</Button>
         <IconButton aria-label='add to favorites' onClick={toggleVideoSave}>
           <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
-
         </IconButton>
       </CardActions>
-    </Card>);
+    </Card>
+    {infoModal}
+    </div>
+    ;
   } else if (place) {
-    return <Card key={place.photoUrl}>
+    return <div>
+    <Card key={place.photoUrl}>
       <CardMedia
         component='img'
         height='240'
         image={place.photoUrl}
         title={place.name}
       />
-      <CardContent />
       <CardActions>
-        <Button size='small' >{place.name}</Button>
+        <Button size='small' onClick={handleOpen}>{place.name}</Button>
         <IconButton aria-label='add to favorites' onClick={togglePlaceSave}>
           <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
         </IconButton>
       </CardActions>
-    </Card>;
+    </Card>
+    {infoModal}
+    </div>;
   } else if (restaurant) {
-    return <Card key={restaurant.id}>
+    return <div>
+    <Card key={restaurant.id}>
       <CardMedia
         component='img'
         height='240'
         image={restaurant.photoUrl}
         title={restaurant.name}
       />
-      <CardContent />
       <CardActions>
-        <Button size='small' >{restaurant.name}</Button>
+        <Button size='small' onClick={handleOpen}>{restaurant.name}</Button>
         <IconButton aria-label='add to favorites' onClick={toggleRestaurantSave}>
           <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
         </IconButton>
       </CardActions>
-    </Card>;
+    </Card>
+    {infoModal}
+    </div>;
   } else if (event) {
-    return <Card key={event.id}>
+    return <div>
+    <Card key={event.id}>
       <CardMedia
         component='img'
         height='240'
         image={event.photoUrl}
         title={event.name}
       />
-      <CardContent />
       <CardActions>
-        <Button size='small' >{event.name}</Button>
+        <Button size='small' onClick={handleOpen}>{event.name}</Button>
         <IconButton aria-label='add to favorites' onClick={toggleEventSave}>
           <FavoriteIcon color={saved ? 'secondary' : 'disabled'} />
         </IconButton>
       </CardActions>
-    </Card>;
+    </Card>
+    {infoModal}
+    </div>
   } else {
     return null;
   }
