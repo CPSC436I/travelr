@@ -3,15 +3,12 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PublicIcon from '@material-ui/icons/Public';
 import { connect } from 'react-redux';
-import { addTrip } from '../../redux/trips/tripsActions'
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,17 +30,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewTripForm({handleClose}) {
+function NewTripForm({handleClose, addTrip}) {
   const classes = useStyles();
   const [tripName, setTripName] = React.useState('');
   const [numberOfDays, setNumberOfdays] = React.useState('');
 
-  const dispatch = useDispatch();
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (numberOfDays <= 10) {
-      dispatch(addTrip({tripName, numberOfDays}));
+    if (numberOfDays <= 10 && numberOfDays > 0) {
+      addTrip({tripName, numberOfDays});
       handleClose();
     }
   }
@@ -76,13 +71,13 @@ function NewTripForm({handleClose}) {
                 label="Days"
                 type="number"
                 variant="outlined"
-                // defaultValue="1"
                 fullWidth
                 InputProps={{
                   inputProps: {
                     max: 10, min: 1
                   }
                 }}
+                // Note: there is a known error message at the line below. Error props expects a boolean, not a boolean expression but we kept this in since the UX is better.
                 error={numberOfDays && (numberOfDays > 10 || numberOfDays < 1)}
                 helperText="The number of days must be between 1 and 10"
                 value={numberOfDays}
@@ -96,7 +91,6 @@ function NewTripForm({handleClose}) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            // onClick={handleClose}
           >
             Create
           </Button>
@@ -105,13 +99,4 @@ function NewTripForm({handleClose}) {
     </Container>
   );
 }
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addTrip: (tripData) => {
-            dispatch(addTrip(tripData));
-        }
-    }
-};
-
-export default connect(null, mapDispatchToProps)(NewTripForm);
+export default connect(null, null)(NewTripForm);

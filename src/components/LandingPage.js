@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import Tooltip from '@material-ui/core/Tooltip';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import BottomScrollListener from 'react-bottom-scroll-listener';
 import japanImg from '../img/japan.png';
 import greeceImg from '../img/greece.png';
 import romaniaImg from '../img/romania.png';

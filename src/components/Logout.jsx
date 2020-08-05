@@ -15,7 +15,7 @@ function Logout() {
             withCredentials: true,
             url: `${process.env.REACT_APP_API_URI}/auth/logout`
         }).then(res => {
-            console.log(res);
+            console.log(res, userData);
             setUser(null);
         });
     });

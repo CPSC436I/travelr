@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewTripModal() {
+export default function NewTripModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -61,7 +61,7 @@ export default function NewTripModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <NewTripForm handleClose={handleClose} />
+            <NewTripForm handleClose={handleClose} addTrip={props.addTrip}/>
           </div>
         </Fade>
       </Modal>
