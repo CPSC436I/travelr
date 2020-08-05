@@ -127,7 +127,7 @@ function Media ({ media, saved, video, place, restaurant, event, query, toggleSa
       <CardMedia
         id='iframeM'
         component='iframe'
-        height='237'
+        height='400'
         src={`https://www.youtube.com/embed/${video}`}
         title={'video'}
       />
