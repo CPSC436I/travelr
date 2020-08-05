@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewTripForm({handleClose}) {
+function NewTripForm({handleClose, addTrip}) {
   const classes = useStyles();
   const [tripName, setTripName] = React.useState('');
   const [numberOfDays, setNumberOfdays] = React.useState('');
@@ -42,8 +42,8 @@ function NewTripForm({handleClose}) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (numberOfDays <= 10) {
-      dispatch(addTrip({tripName, numberOfDays}));
+    if (numberOfDays <= 10 && numberOfDays > 0) {
+      addTrip({tripName, numberOfDays});
       handleClose();
     }
   }
@@ -106,12 +106,13 @@ function NewTripForm({handleClose}) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addTrip: (tripData) => {
-            dispatch(addTrip(tripData));
-        }
-    }
-};
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addTrip: (tripData) => {
+//             dispatch(addTrip(tripData));
+//         }
+//     }
+// };
 
-export default connect(null, mapDispatchToProps)(NewTripForm);
+// export default connect(null, mapDispatchToProps)(NewTripForm);
+export default connect(null, null)(NewTripForm);

@@ -18,7 +18,7 @@ import {
 import Media from '../Media';
 import { fetchFavourites } from '../../redux/';
 
-function AddFavouriteButton ({ folders, fetchFavourites }) {
+function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listIndex}) {
   const [selectedFilters, setFilters] = React.useState([]);
   const [selectedFavourites, setFavourites] = React.useState([]);
 
@@ -49,6 +49,22 @@ function AddFavouriteButton ({ folders, fetchFavourites }) {
     console.log(selectedFavourites);
   };
   const [isOpen, changeIsOpen] = React.useState(false);
+
+  const handleAddCards = () => {
+    if (folders.folders.length === 0) {
+      changeIsOpen(false);
+      return;
+    }
+    const selectedCards = folders.folders[0].images.filter(img => {
+      if (img.mediaType === 'media') {
+        return selectedFavourites.includes(img.urls.small);
+      } else {
+        return selectedFavourites.includes(img.photoUrl);
+      }
+    });
+    addCards(selectedCards, tripID, listIndex);
+    changeIsOpen(false);
+  };
   return (
     <div>
       <Dialog open={isOpen} onClose={() => changeIsOpen(false)}>
@@ -122,7 +138,7 @@ function AddFavouriteButton ({ folders, fetchFavourites }) {
           <Button
             color='primary'
             variant='contained'
-            onClick={() => changeIsOpen(false)}
+            onClick={() => handleAddCards()}
           >
             Add
           </Button>
