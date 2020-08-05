@@ -73,9 +73,6 @@ function NavBar() {
     >
       {!_.isEmpty(userData) ?
         <div>
-          <Link to="/profile" color="inherit">
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          </Link>
           <Link to="/saved" color="inherit">
             <MenuItem onClick={handleMenuClose}>Favourites</MenuItem>
           </Link>
@@ -104,9 +101,6 @@ function NavBar() {
               <div className={classes.sectionDesktop}>
                 <Link to="/saved" className={classes.navButton}>
                   <Button variant="outlined" >Favourites</Button>
-                </Link>
-                <Link to="/calendar" className={classes.navButton}>
-                  <Button variant="outlined" >Calendar</Button>
                 </Link>
                 <Link to="/trips" className={classes.navButton}>
                   <Button variant="outlined" >Trips</Button>

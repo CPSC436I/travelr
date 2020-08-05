@@ -72,7 +72,7 @@ function Favourites({ folders, fetchFavourites }) {
       </div>
       <div className={classes.content}>
         {folders.folders.length === 0 ? (
-          <h1 className={classes.title}>You haven't like anything yet</h1>
+          <h1 className={classes.title}>You haven't liked anything yet</h1>
           )
           : (
             <div>
