@@ -6,14 +6,11 @@ import {
   CardMedia,
   CardActions,
 } from '@material-ui/core';
-
 import { Draggable } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { v4 as uuidv4 } from 'uuid';
-
-
 
 const useStyles = makeStyles((theme) => ({
   DeleteButton: {
@@ -57,11 +54,6 @@ const BoardCard = React.memo(function (props) {
       image = content.photoUrl;
       title = content.name;
     }
-    // let truncTitle = title;
-    // if (title && title.length > 26) {
-    //   truncTitle = title.substring(0, 26);
-    //   truncTitle += "...";
-    // }
     return <Card className={classes.Card}>
       <CardMedia
         component="img"

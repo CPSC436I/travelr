@@ -77,7 +77,6 @@ function NewTripForm({handleClose, addTrip}) {
                     max: 10, min: 1
                   }
                 }}
-                // Note: there is a known error message at the line below. Error props expects a boolean, not a boolean expression but we kept this in since the UX is better.
                 error={Boolean(numberOfDays && (numberOfDays > 10 || numberOfDays < 1))}
                 helperText="The number of days must be between 1 and 10"
                 value={numberOfDays}

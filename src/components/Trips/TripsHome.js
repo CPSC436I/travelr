@@ -8,7 +8,7 @@ import NewTripModal from './NewTripModal';
 
 const useStyles = makeStyles((theme) => ({
   list: {
-    width: '20%', // Fix IE 11 issue.
+    width: '20%',
     margin: 'auto'
   },
 }));

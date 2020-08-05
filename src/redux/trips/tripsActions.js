@@ -61,12 +61,12 @@ export const deleteCard = (tripID, listIndex, cardID) => {
       }
     });
   };
-}
+};
 export const addCards = (selectedCards, tripID, listIndex) => {
   return (dispatch) => {
     dispatch({
       type: 'ADD_CARDS',
       payload: {selectedCards, tripID, listIndex}
     });
-  }
-}
+  };
+};
