@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NavBar() {
-  const [userData, setUser] = useContext(UserProvider.context);
+  const [userData] = useContext(UserProvider.context);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,7 +58,6 @@ function NavBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  console.log(userData);
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -92,7 +91,7 @@ function NavBar() {
       <AppBar position="static" className={classes.navBar}>
         <Toolbar>
           <Link to="/" className={classes.logo}>
-            <img src={travelr} />
+            <img src={travelr} alt="logo"/>
           </Link>
           <Searchbar />
           <div className={classes.grow} />

@@ -40,7 +40,7 @@ function Favourites({ folders, fetchFavourites }) {
 
   useEffect(() => {
     fetchFavourites();
-  }, []);
+  }, [fetchFavourites]);
 
   const handleChange = (event) => {
     if (event.target.checked) {
@@ -62,8 +62,13 @@ function Favourites({ folders, fetchFavourites }) {
             {
               folders.filters.map(filter => {
                 return <FormControlLabel
-                  control={<Checkbox checked={selectedFilters.includes(filter)} onChange={handleChange} name={filter} />}
+                  control={<Checkbox 
+                    checked={selectedFilters.includes(filter)} 
+                    onChange={handleChange} 
+                    name={filter} 
+                    />}
                   label={filter}
+                  key={filter}
                 />;
               })
             }
@@ -134,6 +139,8 @@ function Favourites({ folders, fetchFavourites }) {
                             .find(folder => folder.images.find(img => img.id === imgInState.id) !== undefined) !== undefined}
                             />
                       </Grid>;
+                    } else {
+                      return null;
                     }
                   })}
             </Grid>

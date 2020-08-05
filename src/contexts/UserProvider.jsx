@@ -11,7 +11,6 @@ const UserProvider = ({ children }) => {
             withCredentials: true,
             url: `${process.env.REACT_APP_API_URI}/auth/user`
           }).then((res) => {
-              console.log(res);
               setUser(res.data);
             });
     }, []);

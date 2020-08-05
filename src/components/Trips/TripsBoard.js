@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import BoardList from "./BoardList";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
@@ -19,19 +19,17 @@ const tempTrip = {
   numberofdays: 0,
   days: []
 };
-const useForceUpdate = () => useState()[1];
 
 function TripsBoard (props) {
   const classes = useStyles();
   const { tripID } = useParams();
   const { trips } = props;
   const [trip, setTrip] = useState(tempTrip);
-  const forceUpdate = useForceUpdate();
 
   useEffect(()=>{
     let findTrip = trips.trips.find(trip => trip._id === tripID);
     if (findTrip) setTrip(findTrip);
-  }, [trips, trip]);
+  }, [trips, trip, tripID]);
 
   const onDragEnd = result => {
     const { destination, source } = result;
@@ -44,7 +42,6 @@ function TripsBoard (props) {
     } else {
       props.moveCard(tripID, source, destination);
     }
-    // props.updateTrip(trip);
   };
 
   const handleDeleteCard = (tripID, listIndex, cardID) => {
@@ -52,8 +49,6 @@ function TripsBoard (props) {
   };
   const handleAddCards = (selectedCards, tripID, listIndex) => {
     setTrip(props.addCards(selectedCards, tripID, listIndex));
-    // mapTripDays();
-    // forceUpdate();
   }
 
   const mapTripDays = () => {
@@ -77,18 +72,6 @@ function TripsBoard (props) {
     </DragDropContext>
     </div> </div>: "undefined"}
 
-    </div>
-  );
-  return (
-    <div>
-    {trip ? "found" : "undefined"}
-    TripID from url: {tripID} <br/>
-    mongo: name {trip.name}, id {trip._id}, days {trip.numberofdays}<br/>
-    <div className={classes.DaysContainer}>
-    <DragDropContext onDragEnd={onDragEnd}>
-    {mapTripDays()}
-    </DragDropContext>
-    </div>
     </div>
   );
 }

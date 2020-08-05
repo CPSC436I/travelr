@@ -7,7 +7,6 @@ import {
   DialogActions,
   DialogTitle,
   Grid,
-  TextField,
   Button,
   Card,
   CardActions,
@@ -15,28 +14,14 @@ import {
   Checkbox
 } from '@material-ui/core';
 
-import Media from '../Media';
 import { fetchFavourites } from '../../redux/';
 
-function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listIndex}) {
-  const [selectedFilters, setFilters] = React.useState([]);
+function AddFavouriteButton({ folders, fetchFavourites, addCards, tripID, listIndex }) {
   const [selectedFavourites, setFavourites] = React.useState([]);
 
   useEffect(() => {
     fetchFavourites();
-  }, []);
-
-  const findTitle = (tags) => {
-    //   console.log('TAGS: ' + JSON.stringify(tags));
-    let tag = tags.find(tag => tag.type === 'search');
-    if (tag) {
-      return tags.find(tag => tag.type === 'search');
-    } else {
-      return {
-        title: 'NO TAGS'
-      };
-    }
-  };
+  }, [fetchFavourites]);
 
   const handleChange = (event) => {
     if (event.target.checked) {
@@ -46,7 +31,6 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
       selectedFavourites.splice(index, 1);
     }
     setFavourites([...selectedFavourites]);
-    console.log(selectedFavourites);
   };
   const [isOpen, changeIsOpen] = React.useState(false);
 
@@ -73,19 +57,10 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={3}>
-            {folders.folders.length === 0 ? (
-              null
-            )
-              : folders.folders[0].images
-                .filter(image => {
-                  if (selectedFilters.length === 0) return true;
-                  const intersection = Object.values(image.tags).filter(tag => {
-                    return selectedFilters.includes(tag);
-                  });
-                  return intersection.length > 0;
-                })
-                .map((imgInState) => {
-                  if (imgInState.mediaType === 'media') {
+            {folders.folders.length === 0 ? (null) : folders.folders[0].images
+              .map((imgInState) => {
+                switch (imgInState.mediaType) {
+                  case 'media':
                     return <Grid item xs={4} key={imgInState.id}>
                       <Card key={imgInState.id}>
                         <CardMedia
@@ -99,8 +74,8 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
                           <Checkbox checked={selectedFavourites.includes(imgInState.urls.small)} onChange={handleChange} name={imgInState.urls.small} />
                         </CardActions>
                       </Card>
-                    </Grid>;
-                  } else if (imgInState.mediaType === 'place') {
+                    </Grid>
+                  case 'place':
                     return <Grid item xs={4} key={imgInState.id}>
                       <Card key={imgInState.id}>
                         <CardMedia
@@ -114,8 +89,8 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
                           <Checkbox checked={selectedFavourites.includes(imgInState.photoUrl)} onChange={handleChange} name={imgInState.photoUrl} />
                         </CardActions>
                       </Card>
-                    </Grid>;
-                  } else if (imgInState.mediaType === 'restaurant') {
+                    </Grid>
+                  case 'restaurant':
                     return <Grid item xs={4} key={imgInState.id}>
                       <Card key={imgInState.id}>
                         <CardMedia
@@ -129,9 +104,11 @@ function AddFavouriteButton ({ folders, fetchFavourites, addCards, tripID, listI
                           <Checkbox checked={selectedFavourites.includes(imgInState.photoUrl)} onChange={handleChange} name={imgInState.photoUrl} />
                         </CardActions>
                       </Card>
-                    </Grid>;
-                  }
-                })}
+                    </Grid>
+                  default:
+                    return null;
+                }
+              })}
           </Grid>
         </DialogContent>
         <DialogActions>

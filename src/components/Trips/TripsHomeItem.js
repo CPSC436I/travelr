@@ -33,7 +33,6 @@ function TripsHomeItem(props) {
   const classes = useStyles();
 
   const handleDelete = (title) => {
-    console.log(title);
     props.deleteTrip(title);
   }
 

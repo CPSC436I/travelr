@@ -3,38 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 const TRAVELR_API = 'http://localhost:9000';
 const TRIPS_URL = `${TRAVELR_API}/trips`;
 
-// export const addTrip = input => {
-//   return {
-//     type: 'ADD_TRIP',
-//     title: input.tripName,
-//     days: input.numberOfDays
-//   };
-// };
-const addTripRequest = () => {
-  return {
-    type: 'ADD_TRIP_REQUEST'
-  };
-};
-// title: input.tripName,
-// days: input.numberOfDays
-// const addTripRequest = (input) => {
-//   return {
-//     type: 'ADD_TRIP_REQUEST',
-//     payload: input
-//   };
-// };
-const addTripSuccess = (content) => {
-  return {
-    type: 'ADD_TRIP_SUCCESS',
-    payload: content
-  };
-};
-const addTripFailure = (error) => {
-  return {
-    type: 'ADD_TRIP_FAILURE',
-    payload: error
-  };
-};
 const addTripRedux = (trip) => {
   return {
     type: 'ADD_TRIP_REDUX',
@@ -59,17 +27,6 @@ export const addTrip = input => {
   return (dispatch) => {
     dispatch(addTripRedux(trip));
   };
-  // return (dispatch) => {
-  //   dispatch(addTripRequest);
-  //   fetch(TRIPS_URL, { method: 'POST', body: JSON.stringify(trip) })
-  //   .then(toJson)
-  //   .then(json => {
-  //     dispatch(addTripSuccess(json));
-  //   })
-  //   .catch(error => {
-  //     dispatch(addTripFailure(error.message));
-  //   });
-  // };
 };
 
 const fetchTripsRequest = () => {
@@ -209,9 +166,3 @@ export const updateTrip = (trip) => {
     }
   }
 
-  // export const deleteTrip = text => {
-  //   return {
-  //     type: 'DELETE_TRIP',
-  //     title: text
-  //   };
-  // };

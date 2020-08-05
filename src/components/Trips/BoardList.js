@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import BoardCard from "./BoardCard";
 import { Droppable } from "react-beautiful-dnd";
 import { connect } from "react-redux";
@@ -18,28 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 const bList = React.memo(function BoardList(props) {
   const classes = useStyles();
-  // const trip = props.trips.trips.find(trip => trip._id === props.tripID);
   const tripID = props.trip._id;
   const day = props.day;
-  // const [cardMap, setCardMap] = useState([]);
-  // const [content, setContent] = useState([]);
-
-  // useEffect(()=>{
-  //   let findTrip = props.trips.trips.find(trip => trip._id === tripID);
-  //   let findDay = findTrip.days[props.index];
-  //   setContent(findDay.content);
-  //   // setDay(findDay);
-  // },[props.trips.trips]);
-  //
-  // useEffect(()=>{
-  //   setCardMap(mapCards());
-  // },[props]);
-  // const [dayContent, setDayContent] = useState([]);
-  //
-  // useEffect(()=>{
-  //   setDayContent(mapCards());
-  //   console.log(dayContent);
-  // },[props]);
 
   const mapCards = () => {
     if (day) {

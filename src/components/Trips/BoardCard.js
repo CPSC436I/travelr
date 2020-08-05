@@ -4,13 +4,10 @@ import {
   Button,
   Card,
   CardMedia,
-  CardContent,
   CardActions,
-  Typography
 } from '@material-ui/core';
 
 import { Draggable } from "react-beautiful-dnd";
-import { deleteCard } from "../../redux/trips/tripsActions";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
@@ -41,19 +38,12 @@ const BoardCard = React.memo(function (props) {
   const {content, cardIndex } = props
   const classes = useStyles();
   const dragID = uuidv4();
-  // const [card, setCard] = useState({});
-
-  // useEffect(()=>{
-  //
-  // },[trips]);
 
   const handleDeleteCard = e => {
-    console.log("delete "+ content.id);
     props.deleteCard(props.tripID, props.listIndex, content.id);
   };
 
   const cardMediaHelper = (content) => {
-    console.log('made it here', content);
     let image = "", title = "";
     if (content.mediaType === 'media') {
       image = content.urls.small;
@@ -93,19 +83,4 @@ const BoardCard = React.memo(function (props) {
   );
 });
 
-// const mapStateToProps = (state) => {
-//   return {
-//     trips: state.trips,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     deleteCard: (tripID, listIndex, contentID) => {
-//       dispatch(deleteCard(tripID, listIndex, contentID));
-//     },
-//   };
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(BoardCard);
 export default connect(null, null)(BoardCard);

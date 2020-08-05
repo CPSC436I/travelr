@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import { useDispatch } from "react-redux";
 import Media from './Media';
 import { makeStyles } from '@material-ui/core/styles';
-import { fetchFavourites,
+import {
+  fetchFavourites,
   fetchVideos,
   fetchPlaces,
   fetchMedia,
@@ -16,7 +16,8 @@ import { fetchFavourites,
   fetchMoreVideos,
   fetchMorePlaces,
   fetchMoreRestaurants,
-  fetchMoreEvents } from '../redux';
+  fetchMoreEvents
+} from '../redux';
 
 let mediaIndex = 1;
 
@@ -43,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
 function mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter) {
   let filteredContent;
   if (searchBarFilter.showPlaces) {
-    filteredContent = places.map((place) => {
-      if (place !== null) {
+    filteredContent = places
+      .filter(place => place !== null)
+      .map(place => {
         return <Grid item xs={4} key={place.photoUrl}>
           <Media
             place={place}
@@ -52,9 +54,8 @@ function mergeMediaAndVideos(query, media, folders, videos, places, restaurants,
             saved={folders
               .find(folder => folder.images.find(img => img.id === place.id) !== undefined) !== undefined}
           />
-        </Grid>;
-      }
-    });
+        </Grid>
+      })
   }
   if (searchBarFilter.showMedia) {
     filteredContent = media.map((imgInState) => {

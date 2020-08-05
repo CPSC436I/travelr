@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Tooltip from '@material-ui/core/Tooltip';
-import CardActions from '@material-ui/core/CardActions';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import japanImg from '../img/japan.png';
@@ -12,7 +11,7 @@ import romaniaImg from '../img/romania.png';
 import nzImg from '../img/newzealand.png';
 import Santorini from '../img/greece-santorini.png';
 import Zakynthos from '../img/greece-zakynthos.png';
-import { fetchMedia, fetchPlaces, fetchVideos, setDisplayFilter } from "../redux/media/mediaActions";
+import { fetchMedia, setDisplayFilter } from "../redux/media/mediaActions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 

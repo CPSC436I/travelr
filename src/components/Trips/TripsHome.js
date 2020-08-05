@@ -1,11 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import TripsHomeItem from './TripsHomeItem';
 import { connect } from 'react-redux';
 import { fetchTrips, addTrip } from '../../redux/trips/tripsActions';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  List, ListItem
-} from '@material-ui/core';
+import { List } from '@material-ui/core';
 import NewTripModal from './NewTripModal';
 import AddFavouriteButton from './AddFavouriteButton';
 
@@ -17,27 +15,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function TripsHome(props){
+function TripsHome(props) {
   const classes = useStyles();
-  const {trips} = props;
-  
+  const { trips } = props;
+
   const renderBoards = () => {
     if (trips.loading) return <div>loading</div>;
     if (trips.error) return <div>{trips.error}</div>;
     return trips.trips.map((trip, index) => {
       const boardID = trip._id;
       return (
-        <TripsHomeItem trip={trip} key={boardID} tripkey={index}/>
+        <TripsHomeItem trip={trip} key={boardID} tripkey={index} />
       );
     });
   };
   return (
     <div className={classes.list}>
-    <NewTripModal addTrip={props.addTrip}/>
-    <List>
-    {renderBoards()}
-    </List>
-    <AddFavouriteButton/>
+      <NewTripModal addTrip={props.addTrip} />
+      <List>
+        {renderBoards()}
+      </List>
+      <AddFavouriteButton />
     </div>
   );
 }
