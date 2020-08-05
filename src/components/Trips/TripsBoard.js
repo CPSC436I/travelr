@@ -4,12 +4,18 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import { DragDropContext } from "react-beautiful-dnd";
 import { makeStyles } from '@material-ui/core/styles';
-import { updateTrip, reorderCard, moveCard, deleteCard, addCards } from '../../redux/trips/tripsActions';
+import { reorderCard, moveCard, deleteCard, addCards } from '../../redux/trips/tripsActions';
 
 const useStyles = makeStyles((theme) => ({
   DaysContainer: {
     display: 'flex',
     'flex-direction': 'row',
+  },
+  BoardContainer: {
+    margin: '0 2% 0 2%'
+  },
+  TripName: {
+    'margin-left': '0.8%'
   }
 }));
 
@@ -34,7 +40,7 @@ function TripsBoard (props) {
   const onDragEnd = result => {
     const { destination, source } = result;
     console.log(result);
-    if (!destination) return; // dropped outside of board 
+    if (!destination) return; // dropped outside of board
     const srceListID = source.droppableId;
     const destListID = destination.droppableId;
     if (srceListID === destListID) { //within the same list
@@ -64,14 +70,16 @@ function TripsBoard (props) {
 
   return (
     <div>
-    {trip ? <div>TripID from url: {tripID} <br/>
-    mongo: name {trip.name}, id {trip._id}, days {trip.numberofdays}<br/>
-    <div className={classes.DaysContainer}>
-    <DragDropContext onDragEnd={onDragEnd}>
-    {mapTripDays()}
-    </DragDropContext>
-    </div> </div>: "undefined"}
-
+    {trip ?
+      <div className={classes.BoardContainer}>
+        <h2 className={classes.TripName}>{trip.name}</h2>
+        <div className={classes.DaysContainer}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {mapTripDays()}
+        </DragDropContext>
+        </div>
+      </div>
+    : "trip not found"}
     </div>
   );
 }
@@ -83,9 +91,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateTrip: (trip) => {
-      dispatch(updateTrip(trip));
-    },
     reorderCard: (tripID, source, destination) => {
       dispatch(reorderCard(tripID, source, destination));
     },

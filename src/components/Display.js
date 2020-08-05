@@ -110,11 +110,12 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
   const classes = useStyles();
 
   useEffect(() => {
-    query = sessionStorage.getItem('query');
+    // query = sessionStorage.getItem('query');
     if (query) {
       fetchFavourites();
     }
-  }, []);
+  },[query,fetchFavourites]);
+  // },);
 
   const dispatch = useDispatch();
 

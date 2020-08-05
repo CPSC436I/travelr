@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
   Card: {
     margin: '0 0 5px 0'
+  },
+  CardTitle: {
+    display: '-webkit-box',
+    '-webkit-line-clamp': '1',
+    '-webkit-box-orient': 'vertical'
   }
 }));
 
@@ -52,6 +57,11 @@ const BoardCard = React.memo(function (props) {
       image = content.photoUrl;
       title = content.name;
     }
+    // let truncTitle = title;
+    // if (title && title.length > 26) {
+    //   truncTitle = title.substring(0, 26);
+    //   truncTitle += "...";
+    // }
     return <Card className={classes.Card}>
       <CardMedia
         component="img"
@@ -60,7 +70,11 @@ const BoardCard = React.memo(function (props) {
         title={title}
       />
       <CardActions className={classes.CardActions}>
-        <Button size='small' >{title}</Button>
+        <Button size='small' >
+          <div className={classes.CardTitle}>
+            {title}
+          </div>
+        </Button>
         <IconButton className={classes.DeleteButton} onMouseDown={handleDeleteCard} color='secondary' size='small'>
           <HighlightOffIcon />
         </IconButton>

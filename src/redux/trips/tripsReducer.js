@@ -4,7 +4,7 @@ const img1 = {
   urls: {
     small: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0MzAyN30"
   },
-  description: "Great Wall Of China, China"
+  description: "Great Wall Of China, China blah blah blah"
 };
 const img2 = {
   id: "eltps1t7gDY",
@@ -86,11 +86,6 @@ const deleteHelper = (trips, action) => {
   trips.trips[tripIndex].days[listIndex].content = list;
   return trips;
 };
-const addTripHelper = (trips, action) => {
-  trips.trips.concat({name: action.payload.title, numberOfDays: parseInt(action.payload.days)});
-  return trips;
-};
-
 const addCardsHelper = (trips, action) => {
   const tripID = action.payload.tripID, listIndex = action.payload.listIndex, selectedCards = action.payload.selectedCards;
   let trip = trips.trips.find(obj => obj._id === tripID);
@@ -108,37 +103,10 @@ const tripsState = (trips = initialTrips, action) => {
       newTrips.unshift(action.payload);
       return {
         ...trips,
+        loading: false,
         trips: newTrips,
+        error: ''
       };
-    case 'ADD_TRIP_REQUEST':
-    case 'DELETE_TRIP_REQUEST':
-    case 'FETCH_TRIPS_REQUEST':
-    case 'UPDATE_TRIP_REQUEST':
-    return {
-      ...trips,
-      loading: true
-    };
-    case 'ADD_TRIP_SUCCESS':
-      return addTripHelper(trips, action);
-    case 'FETCH_TRIPS_SUCCESS':
-    case 'UPDATE_TRIP_SUCCESS': //TODO: assumes BE returns all trips
-    case 'DELETE_TRIP_SUCCESS':
-    return {
-      ...trips,
-      loading: false,
-      trips: action.payload,
-      error: ''
-    };
-    case 'FETCH_TRIPS_FAILURE':
-    case 'UPDATE_TRIP_FAILURE':
-    case 'ADD_TRIP_FAILURE':
-    case 'DELETE_TRIP_FAILURE':
-    return {
-      ...trips,
-      loading: false,
-      trips: [],
-      error: action.payload
-    };
     case 'REORDER_CARD':
     return reorderHelper(trips, action);
     case 'MOVE_CARD':
