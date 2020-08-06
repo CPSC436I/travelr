@@ -11,8 +11,10 @@ import {
   Card,
   CardActions,
   CardMedia,
-  Checkbox
+  Checkbox,
+  IconButton
 } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import { fetchFavourites } from '../../redux/';
 
@@ -121,7 +123,9 @@ function AddFavouriteButton({ folders, fetchFavourites, addCards, tripID, listIn
           </Button>
         </DialogActions>
       </Dialog>
-      <Button onClick={() => changeIsOpen(true)}>Add favourite</Button>
+      <IconButton size="small" onClick={() => changeIsOpen(true)}>
+        <AddCircleOutlineIcon/>
+      </IconButton>
     </div>
   );
 }

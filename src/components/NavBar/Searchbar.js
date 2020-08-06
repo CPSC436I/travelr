@@ -119,9 +119,9 @@ function Searchbar() {
     <div>
       <Paper elevation={0}  component="form" onSubmit={handleSubmit} className={classes.paper}>
       <FormControl className={classes.margin}>
-        <BootstrapInput 
+        <BootstrapInput
           id="location-searchbar"
-          placeholder="Literally anywhere"
+          placeholder={(type === 'restaurant' || type === 'event' )? "Any city" :"Literally anywhere"}
           inputProps={{ 'aria-label': 'search' }}
           onChange={e => setLocation(e.target.value)}
           value={location}
