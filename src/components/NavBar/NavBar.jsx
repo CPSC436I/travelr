@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
   const [userData] = useContext(UserProvider.context);
+  console.log('nav bar user ', userData);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
