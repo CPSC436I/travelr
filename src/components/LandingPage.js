@@ -110,6 +110,7 @@ export default function LandingPage() {
 
   const handleRandom = () => {
     const randomDestination = RandomDestinations[Math.floor(Math.random() * RandomDestinations.length)];
+    dispatch(clearMedia());
     dispatch(setDisplayFilter('media'));
     dispatch(fetchMedia(randomDestination));
     sessionStorage.setItem('query', randomDestination);
