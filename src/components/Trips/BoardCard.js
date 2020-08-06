@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 8px'
   },
   Card: {
-    margin: '0 0 5px 0'
+    margin: '0 0 10px 0'
   },
   CardTitle: {
     display: '-webkit-box',
-    '-webkit-line-clamp': '1',
+    '-webkit-line-clamp': '2',
     '-webkit-box-orient': 'vertical'
   }
 }));
@@ -53,6 +53,9 @@ const BoardCard = React.memo(function (props) {
     } else {
       image = content.photoUrl;
       title = content.name;
+    }
+    if (!title || title === "") {
+      title = content.tags[0];
     }
     return <Card className={classes.Card}>
       <CardMedia

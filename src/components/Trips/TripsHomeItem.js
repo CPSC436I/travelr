@@ -27,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
     color:"inherit"
   },
   listitem: {
-    width: '100%'
+    width: '100%',
+    'background-color': 'white',
+    'border-radius': '10px',
+    padding: '8px 8px 8px 8px'
   }
 }));
 

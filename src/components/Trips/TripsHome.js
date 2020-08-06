@@ -9,7 +9,7 @@ import NewTripModal from './NewTripModal';
 const useStyles = makeStyles((theme) => ({
   list: {
     width: '20%',
-    margin: 'auto'
+    margin: 'auto',
   },
 }));
 

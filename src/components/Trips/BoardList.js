@@ -8,19 +8,21 @@ import AddFavouriteButton from './AddFavouriteButton';
 
 const useStyles = makeStyles((theme) => ({
   DayContainer: {
-    'background-color': '#e8ebed',
+    'background-color': 'white',
     'border-radius': '10px',
+    // 'border-color': '#7f7f7f',
     width: '300px',
     padding: '8px',
     height: '100%',
-    margin: '0 10px 0 0',
+    margin: '0 20px 0 0',
   },
   DayBar: {
     display: 'flex',
     'justify-content': 'space-between'
   },
   DayName: {
-    margin: '5px 0 0 5px',
+    margin: '0 0 0 5px',
+    'text-align': 'center'
   }
 }));
 
@@ -48,12 +50,11 @@ const bList = React.memo(function BoardList(props) {
   };
 
   return (
-    <Paper elevation={3} className={classes.DayContainer}>
+    <Paper elevation={4} className={classes.DayContainer}>
       <div className={classes.DayBar}>
         <h4 className={classes.DayName}>{day.name}</h4>
-        <AddFavouriteButton className={classes.AddButton} addCards={props.addCards} tripID={tripID} listIndex={props.index}/>
+        <AddFavouriteButton addCards={props.addCards} tripID={tripID} listIndex={props.index}/>
       </div>
-      <hr/>
       <Droppable droppableId={props.index.toString()} direction="vertical" type="list">
         {provided => (
           <div

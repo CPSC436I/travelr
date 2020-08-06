@@ -46,6 +46,7 @@ export default function NewTripModal(props) {
         variant="contained"
         endIcon={<AddIcon/>}
         onClick={handleOpen}
+        color="primary"
         >
         New Trip
       </Button>

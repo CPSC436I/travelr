@@ -15,13 +15,14 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 2% 0 2%'
   },
   TripName: {
-    'margin-left': '0.8%'
+    'margin-left': '0.8%',
+    color: '#4a4a4a'
   }
 }));
 
 const tempTrip = {
-  _id: "_bruh",
-  name: "bruh",
+  _id: "missingID",
+  name: "missing trip",
   numberofdays: 0,
   days: []
 };
@@ -72,7 +73,7 @@ function TripsBoard (props) {
     <div>
     {trip ?
       <div className={classes.BoardContainer}>
-        <h2 className={classes.TripName}>{trip.name}</h2>
+        <h1 className={classes.TripName}>{trip.name}</h1>
         <div className={classes.DaysContainer}>
         <DragDropContext onDragEnd={onDragEnd}>
           {mapTripDays()}
