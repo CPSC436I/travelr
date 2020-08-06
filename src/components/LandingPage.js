@@ -11,7 +11,7 @@ import romaniaImg from '../img/romania.png';
 import nzImg from '../img/newzealand.png';
 import Santorini from '../img/greece-santorini.png';
 import Zakynthos from '../img/greece-zakynthos.png';
-import { fetchMedia, setDisplayFilter } from "../redux/media/mediaActions";
+import { fetchMedia, clearMedia, setDisplayFilter } from "../redux/media/mediaActions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -135,6 +135,7 @@ export default function LandingPage() {
             <Card 
             className={classes.card} 
             onClick={() => {
+              dispatch(clearMedia());
               dispatch(setDisplayFilter('media'));
               dispatch(fetchMedia(image.location));
               sessionStorage.setItem('query', image.location);
