@@ -11,7 +11,7 @@ import romaniaImg from '../img/romania.png';
 import nzImg from '../img/newzealand.png';
 import Santorini from '../img/greece-santorini.png';
 import Zakynthos from '../img/greece-zakynthos.png';
-import { fetchMedia, clearMedia, setDisplayFilter } from "../redux/media/mediaActions";
+import { fetchMedia,clearMedia, setDisplayFilter } from "../redux/media/mediaActions";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -110,6 +110,7 @@ export default function LandingPage() {
 
   const handleRandom = () => {
     const randomDestination = RandomDestinations[Math.floor(Math.random() * RandomDestinations.length)];
+    dispatch(clearMedia());
     dispatch(setDisplayFilter('media'));
     dispatch(fetchMedia(randomDestination));
     sessionStorage.setItem('query', randomDestination);
