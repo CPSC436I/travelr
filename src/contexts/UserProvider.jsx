@@ -4,7 +4,6 @@ const context = createContext(null);
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState({});
-    console.log('this is the user ', user);
 
     useEffect(() => {
         axios({
@@ -14,7 +13,7 @@ const UserProvider = ({ children }) => {
           }).then((res) => {
               setUser(res.data);
             });
-    }, []);
+    }, [setUser]);
 
     return (
         <context.Provider value={[user, setUser]}>

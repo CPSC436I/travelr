@@ -40,7 +40,6 @@ function TripsBoard (props) {
 
   const onDragEnd = result => {
     const { destination, source } = result;
-    console.log(result);
     if (!destination) return; // dropped outside of board
     const srceListID = source.droppableId;
     const destListID = destination.droppableId;
