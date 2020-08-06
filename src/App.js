@@ -6,7 +6,7 @@ import TripsBoard from './components/Trips/TripsBoard';
 import Display from './components/Display';
 import NavBar from './components/NavBar/NavBar';
 import LandingPage from './components/LandingPage';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import UserProvider from './contexts/UserProvider';
 import history from './history';
 import Favourites from './components/Favourites';

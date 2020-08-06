@@ -6,14 +6,11 @@ import {
   CardMedia,
   CardActions,
 } from '@material-ui/core';
-
 import { Draggable } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { v4 as uuidv4 } from 'uuid';
-
-
 
 const useStyles = makeStyles((theme) => ({
   DeleteButton: {
@@ -29,7 +26,12 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 8px'
   },
   Card: {
-    margin: '0 0 5px 0'
+    margin: '0 0 10px 0'
+  },
+  CardTitle: {
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical'
   }
 }));
 
@@ -52,6 +54,9 @@ const BoardCard = React.memo(function (props) {
       image = content.photoUrl;
       title = content.name;
     }
+    if (!title || title === "") {
+      title = content.tags[0];
+    }
     return <Card className={classes.Card}>
       <CardMedia
         component="img"
@@ -60,7 +65,11 @@ const BoardCard = React.memo(function (props) {
         title={title}
       />
       <CardActions className={classes.CardActions}>
-        <Button size='small' >{title}</Button>
+        <Button size='small' >
+          <div className={classes.CardTitle}>
+            {title}
+          </div>
+        </Button>
         <IconButton className={classes.DeleteButton} onMouseDown={handleDeleteCard} color='secondary' size='small'>
           <HighlightOffIcon />
         </IconButton>

@@ -4,14 +4,11 @@ import {
   ListItem,
   ListItemText,
   ListItemAvatar,
-  ListItemSecondaryAction,
-  IconButton,
-  Avatar
+  Avatar,
+  Paper
 } from '@material-ui/core';
 import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from 'react-redux';
-import { deleteTrip } from '../../redux/trips/tripsActions';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,28 +17,35 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline'
   },
   text: {
-    float: 'right',
-    display: 'inline'
+    display: 'inline',
   },
   avatar: {
     backgroundColor: '#50a2a7',
+  },
+  link: {
+    textDecoration: "none",
+    color:"inherit"
+  },
+  listitem: {
+    width: '100%',
+    'background-color': 'white',
+    'border-radius': '10px',
+    padding: '8px 8px 8px 8px'
   }
 }));
 
 function TripsHomeItem(props) {
-  const {trip, tripkey} = props;
+  const {trip} = props;
   const classes = useStyles();
-
-  const handleDelete = (title) => {
-    props.deleteTrip(title);
-  }
+  const daytext = trip.numberofdays > 1 ? " days" : " day";
 
   return (
     <ListItem>
+    <Paper elevation={3} className={classes.listitem}>
     <Link
       key={trip._id}
       to={`/trips/${trip._id}`}
-      style={{ textDecoration: "none", color:"inherit" }}
+      className={classes.link}
     >
       <ListItemAvatar className={classes.icon}>
         <Avatar className={classes.avatar}>
@@ -50,25 +54,13 @@ function TripsHomeItem(props) {
       </ListItemAvatar>
       <ListItemText
         primary={trip.name}
-        secondary={trip.numberofdays + " days"}
+        secondary={trip.numberofdays + daytext}
         className={classes.text}
       />
       </Link>
-      <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(tripkey)}>
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+      </Paper>
     </ListItem>
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deleteTrip: (tripTitle) => {
-          dispatch(deleteTrip(tripTitle));
-        }
-    }
-};
-
-export default connect(null, mapDispatchToProps)(TripsHomeItem);
+export default connect()(TripsHomeItem);
