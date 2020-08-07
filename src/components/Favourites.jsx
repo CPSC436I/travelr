@@ -60,7 +60,8 @@ function Favourites({ folders, fetchFavourites }) {
           <FormLabel component='legend'>Filters</FormLabel>
           <FormGroup>
             {
-              folders.filters.map(filter => {
+              folders.filters.sort().map(filter => {
+                filter = filter.charAt(0).toUpperCase() + filter.slice(1);
                 return <FormControlLabel
                   control={<Checkbox 
                     checked={selectedFilters.includes(filter)} 
