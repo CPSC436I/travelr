@@ -5,7 +5,6 @@ import UserProvider from '../contexts/UserProvider';
 
 
 function Logout() {
-    
     const [userData, setUser] = useContext(UserProvider.context);
 
     useEffect(() => {

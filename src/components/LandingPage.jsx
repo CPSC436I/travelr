@@ -150,9 +150,6 @@ export default function LandingPage() {
                 image={image.imgSrc}
               />
               </Tooltip>
-              {/* <CardActions>
-                <Button size="small" >{image.location}</Button>
-              </CardActions> */}
             </Card>
           </Grid>
         })}
