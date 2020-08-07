@@ -65,7 +65,9 @@ function Favourites({ folders, fetchFavourites }) {
               }).sort().map(filter => {
                 return <FormControlLabel
                   control={<Checkbox 
-                    checked={selectedFilters.includes(filter)} 
+                    checked={selectedFilters.map(filter => {
+                      return filter.charAt(0).toUpperCase() + filter.slice(1);
+                    }).includes(filter)} 
                     onChange={handleChange} 
                     name={filter} 
                     />}
