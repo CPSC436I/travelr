@@ -141,7 +141,14 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
     <div className={classes.root}>
       <BottomScrollListener onBottom={callback} >
         <h1 className={classes.title}>
-          Showing search results for {sessionStorage.getItem('query')}
+          Showing search results for '{sessionStorage.getItem('query')}' from 
+          {
+            sessionStorage.getItem('searchBarFilter') === 'video' ? ' Youtube' :
+            sessionStorage.getItem('searchBarFilter') === 'place' ? ' Google':
+            sessionStorage.getItem('searchBarFilter') === 'restaurant' ? ' Yelp':
+            sessionStorage.getItem('searchBarFilter') === 'event' ? ' Yelp':
+            sessionStorage.getItem('searchBarFilter') === 'media' ? ' Unsplash': ' somewhere'
+          }
         </h1>
         <Grid
           container
