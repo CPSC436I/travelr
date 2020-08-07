@@ -109,7 +109,7 @@ function mergeMediaAndVideos(query, media, folders, videos, places, restaurants,
   return filteredContent;
 }
 
-function Display({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
+function Display({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken, loading }) {
   const classes = useStyles();
   const [userData] = useContext(UserProvider.context);
 
@@ -138,13 +138,24 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
     }
   };
 
+  const pickHeader = () => {
+    if (loading.isMediaLoading || loading.isVideoLoading || loading.isPlaceLoading || loading.isRestaurantLoading || loading.isEventLoading) {
+      if (media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0) {
+        header = `Loading...`;
+      }
+    } else {
+      if (media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0) {
+      header = `Oops! No results came back for ${sessionStorage.getItem('query')}. Try a different filter or destination!`;
+      } else {
+        header = `Showing search results for ${sessionStorage.getItem('query')}`;
+      } 
+    }
+  }
+
   return (
     <div className={classes.root}>
       <BottomScrollListener onBottom={callback} >
-          {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
-            header = `Loading...`
-          ) : header = `Showing search results for ${sessionStorage.getItem('query')}`
-          }
+      {pickHeader()}
         <h1 className={classes.title}>
           {header}
         </h1>
@@ -157,7 +168,7 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
           alignContent='center'
         >
           {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
-            header = `Oops! No results found for ${sessionStorage.getItem('query')}`
+            null
           ) : mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter)
           }
         </Grid>
@@ -177,7 +188,14 @@ const mapStateToProps = (state) => {
     events: state.events.events,
     searchBarFilter: state.searchBarFilter,
     videoNextPageToken: state.videos.nextPageToken,
-    placeNextPageToken: state.places.nextPageToken
+    placeNextPageToken: state.places.nextPageToken,
+    loading: {
+      isMediaLoading: state.media.loading,
+      isVideoLoading: state.videos.loading,
+      isPlaceLoading: state.places.loading,
+      isRestaurantLoading: state.restaurants.loading,
+      isEventLoading: state.events.loading 
+    }
   };
 };
 
