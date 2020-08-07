@@ -6,7 +6,7 @@ import TripsBoard from './components/Trips/TripsBoard';
 import Display from './components/Display';
 import NavBar from './components/NavBar/NavBar';
 import LandingPage from './components/LandingPage';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import UserProvider from './contexts/UserProvider';
 import history from './history';
 import Favourites from './components/Favourites';
@@ -18,13 +18,13 @@ function App() {
       <UserProvider>
         <NavBar />
         <Route path="/saved" component={Favourites} />
-        <Route exact path="/trips" component={TripsHome} />
-        <Route exact path="/trips/:tripID" component={TripsBoard} />
+        <Route path="/trips" component={TripsHome} exact />
+        <Route path="/trips/:tripID" component={TripsBoard} exact />
         <Route path="/logout" component={Logout} />
+        <Route path="/results" component={Display} />
       </UserProvider>
       <Switch>
         <Route path="/" component={LandingPage} exact />
-        <Route path="/results" component={Display} />
       </Switch>
     </Router>
 

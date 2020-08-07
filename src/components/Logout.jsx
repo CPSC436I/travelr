@@ -5,7 +5,6 @@ import UserProvider from '../contexts/UserProvider';
 
 
 function Logout() {
-    
     const [userData, setUser] = useContext(UserProvider.context);
 
     useEffect(() => {
@@ -15,7 +14,6 @@ function Logout() {
             withCredentials: true,
             url: `${process.env.REACT_APP_API_URI}/auth/logout`
         }).then(res => {
-            console.log(res, userData);
             setUser(null);
         });
     });

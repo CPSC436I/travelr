@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     outline: 0,
     borderRadius: 10
   },
+  modalContainer: {
+    margin: '0 16px'
+  }
 }));
 
 export default function NewTripModal(props) {
@@ -38,12 +41,12 @@ export default function NewTripModal(props) {
   };
 
   return (
-    <div>
-      <br/>
+    <div className={classes.modalContainer}>
       <Button
         variant="contained"
         endIcon={<AddIcon/>}
         onClick={handleOpen}
+        color="primary"
         >
         New Trip
       </Button>

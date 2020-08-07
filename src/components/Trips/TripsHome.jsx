@@ -1,18 +1,16 @@
 import React from 'react';
 import TripsHomeItem from './TripsHomeItem';
 import { connect } from 'react-redux';
-import { fetchTrips, addTrip } from '../../redux/trips/tripsActions';
+import { addTrip } from '../../redux/trips/tripsActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import NewTripModal from './NewTripModal';
-import AddFavouriteButton from './AddFavouriteButton';
-
 
 const useStyles = makeStyles((theme) => ({
   list: {
-    width: '30%', // Fix IE 11 issue.
-    margin: 'auto'
-  }
+    width: '20%',
+    margin: 'auto',
+  },
 }));
 
 function TripsHome(props) {
@@ -35,7 +33,6 @@ function TripsHome(props) {
       <List>
         {renderBoards()}
       </List>
-      <AddFavouriteButton />
     </div>
   );
 }
@@ -46,9 +43,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchTrips: () => {
-      dispatch(fetchTrips());
-    },
     addTrip: (tripData) => {
       dispatch(addTrip(tripData));
     },

@@ -13,7 +13,7 @@ const UserProvider = ({ children }) => {
           }).then((res) => {
               setUser(res.data);
             });
-    }, []);
+    }, [setUser]);
 
     return (
         <context.Provider value={[user, setUser]}>
