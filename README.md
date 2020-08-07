@@ -84,6 +84,9 @@ We started with class components, as that was what the course was taught with. H
 ## Next Steps
 We have several future goals that could improve our app. We spent considerable effort trying to propagate data from the scheduler to the database, beyond storing it in Redux, but unfortunately, we ran out of time. We also want to show additional information when users click on search results, such as flight data and ratings. We already added this, but the information displayed is currently “fake” data (with an Easter egg!). Finally, we would like to extend our app to accommodate mobile users by being more responsive.
 
+**Known Bug**
+Some users are having trouble logging in with Google authentication. This is a known issue that has to do with changes in Google Chrome's SameSite Cookie policy in more recent version of Chrome. Users that don't experience this issue may be running an older version of Chrome or have set the "SameSite by default cookies" option in their chrome://flags to 'Disabled'. We tried to address this by adding the 'SameSite' (and accompanying 'secured') attribute to our cookie session configurations but to no avail. If we had caught this sooner, we may have been able to set up our server with a proxy so that the urls for client and back end would be the same to get past the 'SameSite' restrictions.
+
 ## Contributions
 **Janet Chen**
 Led the design and user experience research for the app. She contributed to the implementation and design of the landing page, results display, and the navigation bar. She also worked on user authentication flow with Google.
