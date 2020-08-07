@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
+import UserProvider from '../contexts/UserProvider';
+import _ from 'lodash';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 import { useDispatch } from "react-redux";
 import Media from './Media';
@@ -20,6 +22,7 @@ import {
 } from '../redux';
 
 let mediaIndex = 1;
+let header;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,13 +111,13 @@ function mergeMediaAndVideos(query, media, folders, videos, places, restaurants,
 
 function Display({ query, media, folders, fetchFavourites, videos, places, restaurants, events, searchBarFilter, videoNextPageToken, placeNextPageToken }) {
   const classes = useStyles();
+  const [userData] = useContext(UserProvider.context);
 
   useEffect(() => {
-    query = sessionStorage.getItem('query');
-    if (query) {
+    if (query && !_.isEmpty(userData)) {
       fetchFavourites();
     }
-  }, []);
+  },[query,fetchFavourites, userData]);
 
   const dispatch = useDispatch();
 
@@ -138,8 +141,12 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
   return (
     <div className={classes.root}>
       <BottomScrollListener onBottom={callback} >
+          {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
+            header = `Loading...`
+          ) : header = `Showing search results for ${sessionStorage.getItem('query')}`
+          }
         <h1 className={classes.title}>
-          Showing search results for {sessionStorage.getItem('query')}
+          {header}
         </h1>
         <Grid
           container
@@ -150,7 +157,7 @@ function Display({ query, media, folders, fetchFavourites, videos, places, resta
           alignContent='center'
         >
           {media.length === 0 && videos.length === 0 && places.length === 0 && restaurants.length === 0 && events.length === 0 ? (
-            null
+            header = `Oops! No results found for ${sessionStorage.getItem('query')}`
           ) : mergeMediaAndVideos(query, media, folders, videos, places, restaurants, events, searchBarFilter)
           }
         </Grid>
