@@ -60,14 +60,10 @@ function Favourites({ folders, fetchFavourites }) {
           <FormLabel component='legend'>Filters</FormLabel>
           <FormGroup>
             {
-              folders.filters.map(filter => {
-                return filter.charAt(0).toUpperCase() + filter.slice(1);
-              }).sort().map(filter => {
+              folders.filters.sort().map(filter => {
                 return <FormControlLabel
                   control={<Checkbox 
-                    checked={selectedFilters.map(filter => {
-                      return filter.charAt(0).toUpperCase() + filter.slice(1);
-                    }).includes(filter)} 
+                    checked={selectedFilters.includes(filter)} 
                     onChange={handleChange} 
                     name={filter} 
                     />}
